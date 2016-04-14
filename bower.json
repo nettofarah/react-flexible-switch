@@ -1,0 +1,29 @@
+{
+  "name": "react-switch",
+  "version": "0.0.0",
+  "description": "switch",
+  "main": "dist/react-switch.min.js",
+  "homepage": "https://github.com/nettofarah/react-switch",
+  "authors": [
+    "Netto Farah"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "react",
+    "react-component"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".editorconfig",
+    ".gitignore",
+    "package.json",
+    "src",
+    "node_modules",
+    "example",
+    "test"
+  ]
+}
