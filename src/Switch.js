@@ -49,7 +49,7 @@ class Switch extends React.Component {
 			this.setState({ dragging: false, on: !this.state.on });
 
 			const newState = !this.state.on;
-			const callback = newState ? this.props.switchOn : this.props.switchOff;
+			const callback = newState ? this.props.onActive : this.props.onInactive;
 			callback && callback();
 
 			// no longer prevent scrolling on mobile
@@ -170,8 +170,9 @@ Switch.propTypes = {
 
 	off: React.PropTypes.bool,
 	on: React.PropTypes.bool,
-	switchOff: React.PropTypes.func,
-	switchOn: React.PropTypes.func,
+
+	onActive: React.PropTypes.func,
+	onInactive: React.PropTypes.func,
 
 	switchStyles: React.PropTypes.shape({
 		width: React.PropTypes.number
@@ -180,8 +181,8 @@ Switch.propTypes = {
 
 Switch.defaultProps = {
 	on: true,
-	switchOff: function() {},
-	switchOn: function() {},
+	onInactive: function() {},
+	onActive: function() {},
 	circleStyles: defaultCircleStyles,
 	switchStyles: defaultSwitchStyles
 };
