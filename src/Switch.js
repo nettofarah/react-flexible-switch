@@ -53,7 +53,7 @@ class Switch extends React.Component {
 
 	styles() {
 		return Object.assign({
-		  borderRadius: switchStyles.width / 2,
+			borderRadius: switchStyles.width / 2,
 		}, switchStyles);
 	}
 
@@ -70,7 +70,7 @@ class Switch extends React.Component {
 
 		return Object.assign({
 			transform: `translateX(${translation}px)`,
-      backgroundColor,
+			backgroundColor,
 			width
 		}, circleStyles);
 	}
