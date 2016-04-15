@@ -24,13 +24,18 @@ var _react2 = _interopRequireDefault(_react);
 var events = {
 	touch: {
 		start: 'touchstart',
-		stop: 'touchend'
+		stop: 'touchend',
+		move: 'touchmove'
 	},
 	mouse: {
 		start: 'mousedown',
 		stop: 'mouseup'
 	}
 };
+
+function preventScroll(e) {
+	e.preventDefault();
+}
 
 var Switch = (function (_React$Component) {
 	_inherits(Switch, _React$Component);
@@ -71,8 +76,11 @@ var Switch = (function (_React$Component) {
 				this.setState({ dragging: false, on: !this.state.on });
 
 				var newState = !this.state.on;
-				var callback = newState ? this.props.switchOn : this.props.switchOff;
+				var callback = newState ? this.props.onActive : this.props.onInactive;
 				callback && callback();
+
+				// no longer prevent scrolling on mobile
+				document.removeEventListener(events.touch.move, preventScroll, false);
 			}
 		}
 	}, {
@@ -80,6 +88,9 @@ var Switch = (function (_React$Component) {
 		value: function onSlideStart(e) {
 			if (e.target == this.refs.circle || e.target == this.refs['switch']) {
 				this.setState({ dragging: true });
+
+				// prevent scrolling on mobile
+				document.addEventListener(events.touch.move, preventScroll, false);
 			}
 		}
 	}, {
@@ -188,8 +199,9 @@ Switch.propTypes = {
 
 	off: _react2['default'].PropTypes.bool,
 	on: _react2['default'].PropTypes.bool,
-	switchOff: _react2['default'].PropTypes.func,
-	switchOn: _react2['default'].PropTypes.func,
+
+	onActive: _react2['default'].PropTypes.func,
+	onInactive: _react2['default'].PropTypes.func,
 
 	switchStyles: _react2['default'].PropTypes.shape({
 		width: _react2['default'].PropTypes.number
@@ -198,8 +210,8 @@ Switch.propTypes = {
 
 Switch.defaultProps = {
 	on: true,
-	switchOff: function switchOff() {},
-	switchOn: function switchOn() {},
+	onInactive: function onInactive() {},
+	onActive: function onActive() {},
 	circleStyles: defaultCircleStyles,
 	switchStyles: defaultSwitchStyles
 };
