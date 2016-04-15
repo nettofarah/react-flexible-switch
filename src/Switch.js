@@ -51,33 +51,53 @@ class Switch extends React.Component {
 		].join(' ');
 	}
 
-	styles() {
+	switchStyles() {
 		return Object.assign({
 			borderRadius: switchStyles.width / 2,
 		}, switchStyles);
 	}
 
-	circleStyles() {
-		const switchStyles = this.styles();
+	translationStyle() {
+		const switchStyles = this.switchStyles();
 
-		let translation = this.state.on ? (switchStyles.width - circleStyles.height) : 0;
-		const backgroundColor = this.state.on ? circleStyles.onColor : circleStyles.offColor;
-		const width = this.state.dragging ? (circleStyles.height + circleStyles.height / 2)  : circleStyles.height;
+		const offset = switchStyles.width - circleStyles.height;
+		let translation = this.state.on ? offset : 0;
 
 		if (this.state.dragging && this.state.on) {
 			translation -= (circleStyles.height / 2 + switchStyles.padding);
 		}
 
-		return Object.assign({
-			transform: `translateX(${translation}px)`,
-			backgroundColor,
-			width
-		}, circleStyles);
+		return {
+			transform: `translateX(${translation}px)`
+		};
+	}
+
+	backgroundStyle() {
+		const backgroundColor = this.state.on ? circleStyles.onColor : circleStyles.offColor;
+		return { backgroundColor };
+	}
+
+	circleWidthStyle() {
+		const switchStyles = this.switchStyles();
+		const width = this.state.dragging ? (circleStyles.height + circleStyles.height / 2)  : circleStyles.height;
+		return { width };
+	}
+
+	circleStyles() {
+		return Object.assign(
+			this.circleWidthStyle(),
+			this.backgroundStyle(),
+			this.translationStyle(),
+			circleStyles
+		);
 	}
 
 	render() {
 		return (
-			<div style={this.styles()} className={this.classes()} ref="switch" onMouseLeave={this.onMouseLeave}>
+			<div style={this.switchStyles()}
+					 className={this.classes()}
+					 ref="switch"
+					 onMouseLeave={this.onMouseLeave}>
 				<span style={this.circleStyles()} className="circle" ref="circle"></span>
 			</div>
 		);
