@@ -1,12 +1,23 @@
 import React from 'react';
 
+const events = {
+  touch: {
+    start: 'touchstart',
+    stop: 'touchend'
+  },
+  mouse: {
+    start: 'mousedown',
+    stop: 'mouseup'
+  }
+};
+
 class Switch extends React.Component {
 
 	constructor(props) {
 		super(props);
 
-		this.onMouseUp = this.onMouseUp.bind(this);
-		this.onMouseDown = this.onMouseDown.bind(this);
+		this.onSlideEnd = this.onSlideEnd.bind(this);
+		this.onSlideStart = this.onSlideStart.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 
 		const onOff = !!this.props.on ? true : false;
@@ -14,16 +25,20 @@ class Switch extends React.Component {
 	}
 
 	componentDidMount() {
-		document.addEventListener('mouseup', this.onMouseUp, false);
-		document.addEventListener('mousedown', this.onMouseDown, false);
+		document.addEventListener(events.touch.start, this.onSlideStart, false);
+		document.addEventListener(events.mouse.start, this.onSlideStart, false);
+		document.addEventListener(events.touch.stop, this.onSlideEnd, false);
+		document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
 	}
 
 	componentWillUnmount() {
-		document.removeEventListener('mouseup', this.onMouseUp, false);
-		document.removeEventListener('mousedown', this.onMouseDown, false);
+		document.removeEventListener(events.touch.start, this.onSlideStart, false);
+		document.removeEventListener(events.mouse.start, this.onSlideStart, false);
+		document.removeEventListener(events.touch.stop, this.onSlideEnd, false);
+		document.removeEventListener(events.mouse.stop, this.onSlideEnd, false);
 	}
 
-	onMouseUp() {
+	onSlideEnd() {
 		if (this.state.dragging) {
 			this.setState({ dragging: false, on: !this.state.on });
 
@@ -33,14 +48,14 @@ class Switch extends React.Component {
 		}
 	}
 
-	onMouseDown(e) {
+	onSlideStart(e) {
 		if (e.target == this.refs.circle || e.target == this.refs.switch) {
 			this.setState({ dragging: true });
 		}
 	}
 
 	onMouseLeave(e) {
-		this.onMouseUp(e);
+		this.onSlideEnd(e);
 	}
 
 	classes() {
