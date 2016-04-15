@@ -21,6 +21,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var events = {
 	touch: {
 		start: 'touchstart',
@@ -49,8 +53,8 @@ var Switch = (function (_React$Component) {
 		this.onSlideStart = this.onSlideStart.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 
-		var onOff = !!this.props.on ? true : false;
-		this.state = { dragging: false, on: onOff };
+		var activeState = !!this.props.active ? true : false;
+		this.state = { sliding: false, active: activeState };
 	}
 
 	_createClass(Switch, [{
@@ -72,10 +76,10 @@ var Switch = (function (_React$Component) {
 	}, {
 		key: 'onSlideEnd',
 		value: function onSlideEnd() {
-			if (this.state.dragging) {
-				this.setState({ dragging: false, on: !this.state.on });
+			if (this.state.sliding) {
+				this.setState({ sliding: false, active: !this.state.active });
 
-				var newState = !this.state.on;
+				var newState = !this.state.active;
 				var callback = newState ? this.props.onActive : this.props.onInactive;
 				callback && callback();
 
@@ -87,7 +91,7 @@ var Switch = (function (_React$Component) {
 		key: 'onSlideStart',
 		value: function onSlideStart(e) {
 			if (e.target == this.refs.circle || e.target == this.refs['switch']) {
-				this.setState({ dragging: true });
+				this.setState({ sliding: true });
 
 				// prevent scrolling on mobile
 				document.addEventListener(events.touch.move, preventScroll, false);
@@ -101,7 +105,7 @@ var Switch = (function (_React$Component) {
 	}, {
 		key: 'classes',
 		value: function classes() {
-			return ['switch', this.state.dragging ? 'dragging' : '', this.state.on ? 'on' : 'off'].join(' ');
+			return (0, _classnames2['default'])('switch', { sliding: this.state.sliding }, { active: this.state.active }, { inactive: !this.state.active });
 		}
 	}, {
 		key: 'switchStyles',
@@ -116,9 +120,9 @@ var Switch = (function (_React$Component) {
 			var switchStyles = this.switchStyles();
 
 			var offset = switchStyles.width - circleStyles.diameter;
-			var translation = this.state.on ? offset : 0;
+			var translation = this.state.active ? offset : 0;
 
-			if (this.state.dragging && this.state.on) {
+			if (this.state.sliding && this.state.active) {
 				translation -= circleStyles.diameter / 2 + switchStyles.padding;
 			}
 
@@ -130,7 +134,7 @@ var Switch = (function (_React$Component) {
 		key: 'backgroundStyle',
 		value: function backgroundStyle() {
 			var circleStyles = this.circleStylesProps();
-			var backgroundColor = this.state.on ? circleStyles.onColor : circleStyles.offColor;
+			var backgroundColor = this.state.active ? circleStyles.onColor : circleStyles.offColor;
 			return { backgroundColor: backgroundColor };
 		}
 	}, {
@@ -148,7 +152,7 @@ var Switch = (function (_React$Component) {
 		value: function circleDimensionsStyle() {
 			var switchStyles = this.switchStyles();
 			var circleStyles = this.circleStylesProps();
-			var width = this.state.dragging ? circleStyles.diameter + circleStyles.diameter / 2 : circleStyles.diameter;
+			var width = this.state.sliding ? circleStyles.diameter + circleStyles.diameter / 2 : circleStyles.diameter;
 			return { width: width, height: circleStyles.diameter };
 		}
 	}, {
@@ -191,14 +195,15 @@ var defaultCircleStyles = {
 };
 
 Switch.propTypes = {
+	active: _react2['default'].PropTypes.bool,
+
 	circleStyles: _react2['default'].PropTypes.shape({
 		onColor: _react2['default'].PropTypes.string,
 		offColor: _react2['default'].PropTypes.string,
 		diameter: _react2['default'].PropTypes.number
 	}),
 
-	off: _react2['default'].PropTypes.bool,
-	on: _react2['default'].PropTypes.bool,
+	inactive: _react2['default'].PropTypes.bool,
 
 	onActive: _react2['default'].PropTypes.func,
 	onInactive: _react2['default'].PropTypes.func,
@@ -227,4 +232,4 @@ function merge() {
 exports['default'] = Switch;
 module.exports = exports['default'];
 
-},{"react":undefined}]},{},[]);
+},{"classnames":undefined,"react":undefined}]},{},[]);

@@ -17,13 +17,13 @@ var App = React.createClass({
 				null,
 				' On By default '
 			),
-			React.createElement(Switch, { on: true }),
+			React.createElement(Switch, { active: true }),
 			React.createElement(
 				'h2',
 				null,
 				' Off By default '
 			),
-			React.createElement(Switch, { off: true }),
+			React.createElement(Switch, { inactive: true }),
 			React.createElement(
 				'h2',
 				null,
