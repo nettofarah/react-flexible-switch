@@ -1,21 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
+import { merge, events, disableScroll, reEnableScroll } from './utils';
 
-const events = {
-  touch: {
-    start: 'touchstart',
-    stop: 'touchend',
-		move: 'touchmove'
-  },
-  mouse: {
-    start: 'mousedown',
-    stop: 'mouseup'
-  }
-};
-
-function preventScroll(e) {
-	e.preventDefault();
-}
 
 class Switch extends React.Component {
 
@@ -35,7 +21,6 @@ class Switch extends React.Component {
 		document.addEventListener(events.mouse.start, this.onSlideStart, false);
 		document.addEventListener(events.touch.stop, this.onSlideEnd, false);
 		document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
-
 	}
 
 	componentWillUnmount() {
@@ -53,17 +38,14 @@ class Switch extends React.Component {
 			const callback = newState ? this.props.onActive : this.props.onInactive;
 			callback && callback();
 
-			// no longer prevent scrolling on mobile
-			document.removeEventListener(events.touch.move, preventScroll, false);
+			reEnableScroll();
 		}
 	}
 
 	onSlideStart(e) {
 		if (e.target == this.refs.circle || e.target == this.refs.switch) {
 			this.setState({ sliding: true });
-
-			// prevent scrolling on mobile
-			document.addEventListener(events.touch.move, preventScroll, false);
+			disableScroll();
 		}
 	}
 
@@ -189,9 +171,5 @@ Switch.defaultProps = {
 	circleStyles: defaultCircleStyles,
 	switchStyles: defaultSwitchStyles
 };
-
-function merge(...hashes) {
-	return Object.assign({}, ...hashes);
-}
 
 export default Switch;
