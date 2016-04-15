@@ -11,6 +11,19 @@ var App = React.createClass({
 
 				<h2> Off By default </h2>
 				<Switch off />
+
+				<h2> Custom Colors </h2>
+				<Switch circleStyles={{ onColor: 'blue', offColor: 'red' }} />
+
+				<h2> Custom Diameter </h2>
+				<Switch circleStyles={{ diameter: 55 }} />
+				<br />
+				<Switch circleStyles={{ diameter: 20 }} />
+
+				<h2> Custom Switch Width </h2>
+				<Switch switchStyles={{ width: 50 }} />
+				<br />
+				<Switch switchStyles={{ width: 200 }} />
 			</div>
 		);
 	}

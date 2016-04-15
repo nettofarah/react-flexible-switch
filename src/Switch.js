@@ -52,19 +52,22 @@ class Switch extends React.Component {
 	}
 
 	switchStyles() {
-		return Object.assign({
-			borderRadius: switchStyles.width / 2,
-		}, switchStyles);
+		const switchStyles = this.switchStylesProps();
+		return merge(
+			{ borderRadius: switchStyles.width / 2 },
+		  switchStyles
+		);
 	}
 
 	translationStyle() {
+		const circleStyles = this.circleStylesProps();
 		const switchStyles = this.switchStyles();
 
-		const offset = switchStyles.width - circleStyles.height;
+		const offset = switchStyles.width - circleStyles.diameter;
 		let translation = this.state.on ? offset : 0;
 
 		if (this.state.dragging && this.state.on) {
-			translation -= (circleStyles.height / 2 + switchStyles.padding);
+			translation -= (circleStyles.diameter / 2 + switchStyles.padding);
 		}
 
 		return {
@@ -73,46 +76,57 @@ class Switch extends React.Component {
 	}
 
 	backgroundStyle() {
+		const circleStyles = this.circleStylesProps();
 		const backgroundColor = this.state.on ? circleStyles.onColor : circleStyles.offColor;
 		return { backgroundColor };
 	}
 
-	circleWidthStyle() {
+	circleStylesProps() {
+		return merge(defaultCircleStyles, this.props.circleStyles);
+	}
+
+	switchStylesProps() {
+		return merge(defaultSwitchStyles, this.props.switchStyles);
+	}
+
+	circleDimensionsStyle() {
 		const switchStyles = this.switchStyles();
-		const width = this.state.dragging ? (circleStyles.height + circleStyles.height / 2)  : circleStyles.height;
-		return { width };
+		const circleStyles = this.circleStylesProps();
+		const width = this.state.dragging ? (circleStyles.diameter + circleStyles.diameter / 2)  : circleStyles.diameter;
+		return { width, height: circleStyles.diameter };
 	}
 
 	circleStyles() {
-		return Object.assign(
-			this.circleWidthStyle(),
+		return merge(
+			this.circleDimensionsStyle(),
 			this.backgroundStyle(),
 			this.translationStyle(),
-			circleStyles
+			this.circleStylesProps()
 		);
 	}
 
 	render() {
 		return (
-			<div style={this.switchStyles()}
+			<span style={this.switchStyles()}
 					 className={this.classes()}
 					 ref="switch"
 					 onMouseLeave={this.onMouseLeave}>
 				<span style={this.circleStyles()} className="circle" ref="circle"></span>
-			</div>
+			</span>
 		);
 	}
 }
 
-const switchStyles = {
+const defaultSwitchStyles = {
 	width: 100,
-	backgroundColor: 'white',
 	padding: 4,
-	border: '1px solid gray'
+	border: '1px solid #CFCFCF',
+	display: 'inline-block',
+	backgroundColor: 'white'
 };
 
-const circleStyles = {
-	height: 35,
+const defaultCircleStyles = {
+	diameter: 35,
 	borderRadius: 35,
 	display: 'block',
 	transition: 'transform 200ms, width 200ms, background-color 200ms',
@@ -121,10 +135,32 @@ const circleStyles = {
 };
 
 Switch.propTypes = {
+	circleStyles: React.PropTypes.shape({
+		onColor: React.PropTypes.string,
+		offColor: React.PropTypes.string,
+		diameter: React.PropTypes.number
+	}),
+
 	off: React.PropTypes.bool,
 	on: React.PropTypes.bool,
 	switchOff: React.PropTypes.func,
-	switchOn: React.PropTypes.func
+	switchOn: React.PropTypes.func,
+
+	switchStyles: React.PropTypes.shape({
+		width: React.PropTypes.number
+	})
 };
+
+Switch.defaultProps = {
+	on: true,
+	switchOff: function() {},
+	switchOn: function() {},
+	circleStyles: defaultCircleStyles,
+	switchStyles: defaultSwitchStyles
+};
+
+function merge(...hashes) {
+	return Object.assign({}, ...hashes);
+}
 
 export default Switch;
