@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 const events = {
   touch: {
@@ -25,8 +26,8 @@ class Switch extends React.Component {
 		this.onSlideStart = this.onSlideStart.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 
-		const onOff = !!this.props.on ? true : false;
-		this.state = { dragging: false, on: onOff };
+		const activeState = !!this.props.active ? true : false;
+		this.state = { sliding: false, active: activeState };
 	}
 
 	componentDidMount() {
@@ -45,10 +46,10 @@ class Switch extends React.Component {
 	}
 
 	onSlideEnd() {
-		if (this.state.dragging) {
-			this.setState({ dragging: false, on: !this.state.on });
+		if (this.state.sliding) {
+			this.setState({ sliding: false, active: !this.state.active });
 
-			const newState = !this.state.on;
+			const newState = !this.state.active;
 			const callback = newState ? this.props.onActive : this.props.onInactive;
 			callback && callback();
 
@@ -59,7 +60,7 @@ class Switch extends React.Component {
 
 	onSlideStart(e) {
 		if (e.target == this.refs.circle || e.target == this.refs.switch) {
-			this.setState({ dragging: true });
+			this.setState({ sliding: true });
 
 			// prevent scrolling on mobile
 			document.addEventListener(events.touch.move, preventScroll, false);
@@ -71,11 +72,12 @@ class Switch extends React.Component {
 	}
 
 	classes() {
-		return [
+		return classNames(
 			'switch',
-			this.state.dragging ? 'dragging' : '',
-			this.state.on ? 'on' : 'off'
-		].join(' ');
+			{ sliding: this.state.sliding },
+			{ active: this.state.active },
+			{ inactive: !this.state.active }
+		);
 	}
 
 	switchStyles() {
@@ -91,9 +93,9 @@ class Switch extends React.Component {
 		const switchStyles = this.switchStyles();
 
 		const offset = switchStyles.width - circleStyles.diameter;
-		let translation = this.state.on ? offset : 0;
+		let translation = this.state.active ? offset : 0;
 
-		if (this.state.dragging && this.state.on) {
+		if (this.state.sliding && this.state.active) {
 			translation -= (circleStyles.diameter / 2 + switchStyles.padding);
 		}
 
@@ -104,7 +106,7 @@ class Switch extends React.Component {
 
 	backgroundStyle() {
 		const circleStyles = this.circleStylesProps();
-		const backgroundColor = this.state.on ? circleStyles.onColor : circleStyles.offColor;
+		const backgroundColor = this.state.active ? circleStyles.onColor : circleStyles.offColor;
 		return { backgroundColor };
 	}
 
@@ -119,7 +121,7 @@ class Switch extends React.Component {
 	circleDimensionsStyle() {
 		const switchStyles = this.switchStyles();
 		const circleStyles = this.circleStylesProps();
-		const width = this.state.dragging ? (circleStyles.diameter + circleStyles.diameter / 2)  : circleStyles.diameter;
+		const width = this.state.sliding ? (circleStyles.diameter + circleStyles.diameter / 2)  : circleStyles.diameter;
 		return { width, height: circleStyles.diameter };
 	}
 
@@ -162,14 +164,15 @@ const defaultCircleStyles = {
 };
 
 Switch.propTypes = {
+	active: React.PropTypes.bool,
+
 	circleStyles: React.PropTypes.shape({
 		onColor: React.PropTypes.string,
 		offColor: React.PropTypes.string,
 		diameter: React.PropTypes.number
 	}),
 
-	off: React.PropTypes.bool,
-	on: React.PropTypes.bool,
+	inactive: React.PropTypes.bool,
 
 	onActive: React.PropTypes.func,
 	onInactive: React.PropTypes.func,

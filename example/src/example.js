@@ -7,10 +7,10 @@ var App = React.createClass({
 		return (
 			<div>
 				<h2> On By default </h2>
-				<Switch on />
+				<Switch active />
 
 				<h2> Off By default </h2>
-				<Switch off />
+				<Switch inactive />
 
 				<h2> Custom Colors </h2>
 				<Switch circleStyles={{ onColor: 'blue', offColor: 'red' }} />
