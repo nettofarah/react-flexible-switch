@@ -3,13 +3,18 @@ import React from 'react';
 const events = {
   touch: {
     start: 'touchstart',
-    stop: 'touchend'
+    stop: 'touchend',
+		move: 'touchmove'
   },
   mouse: {
     start: 'mousedown',
     stop: 'mouseup'
   }
 };
+
+function preventScroll(e) {
+	e.preventDefault();
+}
 
 class Switch extends React.Component {
 
@@ -29,6 +34,7 @@ class Switch extends React.Component {
 		document.addEventListener(events.mouse.start, this.onSlideStart, false);
 		document.addEventListener(events.touch.stop, this.onSlideEnd, false);
 		document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
+
 	}
 
 	componentWillUnmount() {
@@ -45,12 +51,18 @@ class Switch extends React.Component {
 			const newState = !this.state.on;
 			const callback = newState ? this.props.switchOn : this.props.switchOff;
 			callback && callback();
+
+			// no longer prevent scrolling on mobile
+			document.removeEventListener(events.touch.move, preventScroll, false);
 		}
 	}
 
 	onSlideStart(e) {
 		if (e.target == this.refs.circle || e.target == this.refs.switch) {
 			this.setState({ dragging: true });
+
+			// prevent scrolling on mobile
+			document.addEventListener(events.touch.move, preventScroll, false);
 		}
 	}
 
