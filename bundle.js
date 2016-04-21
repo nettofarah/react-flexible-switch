@@ -1,4 +1,50 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"react-switch":[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.merge = merge;
+exports.disableScroll = disableScroll;
+exports.reEnableScroll = reEnableScroll;
+var events = {
+  touch: {
+    start: 'touchstart',
+    stop: 'touchend',
+    move: 'touchmove'
+  },
+  mouse: {
+    start: 'mousedown',
+    stop: 'mouseup'
+  }
+};
+
+exports.events = events;
+
+function merge() {
+  for (var _len = arguments.length, hashes = Array(_len), _key = 0; _key < _len; _key++) {
+    hashes[_key] = arguments[_key];
+  }
+
+  return _extends.apply(undefined, [{}].concat(hashes));
+}
+
+function disableScroll() {
+  document.addEventListener(events.touch.move, preventScroll, false);
+}
+
+function reEnableScroll() {
+  document.removeEventListener(events.touch.move, preventScroll, false);
+}
+
+function preventScroll(e) {
+  e.preventDefault();
+}
+
+},{}],"react-flexible-switch":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -8,8 +54,6 @@ Object.defineProperty(exports, '__esModule', {
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -25,21 +69,7 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var events = {
-	touch: {
-		start: 'touchstart',
-		stop: 'touchend',
-		move: 'touchmove'
-	},
-	mouse: {
-		start: 'mousedown',
-		stop: 'mouseup'
-	}
-};
-
-function preventScroll(e) {
-	e.preventDefault();
-}
+var _utils = require('./utils');
 
 var Switch = (function (_React$Component) {
 	_inherits(Switch, _React$Component);
@@ -53,38 +83,53 @@ var Switch = (function (_React$Component) {
 		this.onSlideStart = this.onSlideStart.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 
-		var activeState = !!this.props.active ? true : false;
+		var activeState = false;
+
+		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
+			activeState = false;
+		}
+
+		if (typeof this.props.active != 'undefined' && this.props.active) {
+			activeState = true;
+		}
+
+		if (typeof this.props.inactive != 'undefined' && this.props.inactive) {
+			activeState = false;
+		}
+
 		this.state = { sliding: false, active: activeState };
 	}
 
 	_createClass(Switch, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			document.addEventListener(events.touch.start, this.onSlideStart, false);
-			document.addEventListener(events.mouse.start, this.onSlideStart, false);
-			document.addEventListener(events.touch.stop, this.onSlideEnd, false);
-			document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
+			document.addEventListener(_utils.events.touch.start, this.onSlideStart, false);
+			document.addEventListener(_utils.events.mouse.start, this.onSlideStart, false);
+			document.addEventListener(_utils.events.touch.stop, this.onSlideEnd, false);
+			document.addEventListener(_utils.events.mouse.stop, this.onSlideEnd, false);
+		}
+	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate(prevProps, prevState) {
+			if (this.state.active != prevState.active) {
+				var callback = this.state.active ? this.props.onActive : this.props.onInactive;
+				callback && callback();
+			}
 		}
 	}, {
 		key: 'componentWillUnmount',
 		value: function componentWillUnmount() {
-			document.removeEventListener(events.touch.start, this.onSlideStart, false);
-			document.removeEventListener(events.mouse.start, this.onSlideStart, false);
-			document.removeEventListener(events.touch.stop, this.onSlideEnd, false);
-			document.removeEventListener(events.mouse.stop, this.onSlideEnd, false);
+			document.removeEventListener(_utils.events.touch.start, this.onSlideStart, false);
+			document.removeEventListener(_utils.events.mouse.start, this.onSlideStart, false);
+			document.removeEventListener(_utils.events.touch.stop, this.onSlideEnd, false);
+			document.removeEventListener(_utils.events.mouse.stop, this.onSlideEnd, false);
 		}
 	}, {
 		key: 'onSlideEnd',
 		value: function onSlideEnd() {
 			if (this.state.sliding) {
 				this.setState({ sliding: false, active: !this.state.active });
-
-				var newState = !this.state.active;
-				var callback = newState ? this.props.onActive : this.props.onInactive;
-				callback && callback();
-
-				// no longer prevent scrolling on mobile
-				document.removeEventListener(events.touch.move, preventScroll, false);
+				(0, _utils.reEnableScroll)();
 			}
 		}
 	}, {
@@ -92,9 +137,7 @@ var Switch = (function (_React$Component) {
 		value: function onSlideStart(e) {
 			if (e.target == this.refs.circle || e.target == this.refs['switch']) {
 				this.setState({ sliding: true });
-
-				// prevent scrolling on mobile
-				document.addEventListener(events.touch.move, preventScroll, false);
+				(0, _utils.disableScroll)();
 			}
 		}
 	}, {
@@ -111,7 +154,7 @@ var Switch = (function (_React$Component) {
 		key: 'switchStyles',
 		value: function switchStyles() {
 			var switchStyles = this.switchStylesProps();
-			return merge({ borderRadius: switchStyles.width / 2 }, switchStyles);
+			return (0, _utils.merge)({ borderRadius: switchStyles.width / 2 }, switchStyles);
 		}
 	}, {
 		key: 'translationStyle',
@@ -140,12 +183,12 @@ var Switch = (function (_React$Component) {
 	}, {
 		key: 'circleStylesProps',
 		value: function circleStylesProps() {
-			return merge(defaultCircleStyles, this.props.circleStyles);
+			return (0, _utils.merge)(defaultCircleStyles, this.props.circleStyles);
 		}
 	}, {
 		key: 'switchStylesProps',
 		value: function switchStylesProps() {
-			return merge(defaultSwitchStyles, this.props.switchStyles);
+			return (0, _utils.merge)(defaultSwitchStyles, this.props.switchStyles);
 		}
 	}, {
 		key: 'circleDimensionsStyle',
@@ -158,7 +201,7 @@ var Switch = (function (_React$Component) {
 	}, {
 		key: 'circleStyles',
 		value: function circleStyles() {
-			return merge(this.circleDimensionsStyle(), this.backgroundStyle(), this.translationStyle(), this.circleStylesProps());
+			return (0, _utils.merge)(this.circleDimensionsStyle(), this.backgroundStyle(), this.translationStyle(), this.circleStylesProps());
 		}
 	}, {
 		key: 'render',
@@ -181,7 +224,8 @@ var defaultSwitchStyles = {
 	width: 100,
 	padding: 4,
 	border: '1px solid #CFCFCF',
-	display: 'inline-block',
+	display: 'flex',
+	position: 'relative',
 	backgroundColor: 'white'
 };
 
@@ -214,22 +258,13 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
-	on: true,
 	onInactive: function onInactive() {},
 	onActive: function onActive() {},
 	circleStyles: defaultCircleStyles,
 	switchStyles: defaultSwitchStyles
 };
 
-function merge() {
-	for (var _len = arguments.length, hashes = Array(_len), _key = 0; _key < _len; _key++) {
-		hashes[_key] = arguments[_key];
-	}
-
-	return _extends.apply(undefined, [{}].concat(hashes));
-}
-
 exports['default'] = Switch;
 module.exports = exports['default'];
 
-},{"classnames":undefined,"react":undefined}]},{},[]);
+},{"./utils":1,"classnames":undefined,"react":undefined}]},{},[]);

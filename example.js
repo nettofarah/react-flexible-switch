@@ -3,7 +3,7 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Switch = require('react-switch');
+var Switch = require('react-flexible-switch');
 
 var App = React.createClass({
 	displayName: 'App',
@@ -52,4 +52,4 @@ var App = React.createClass({
 
 ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
 
-},{"react":undefined,"react-dom":undefined,"react-switch":undefined}]},{},[1]);
+},{"react":undefined,"react-dom":undefined,"react-flexible-switch":undefined}]},{},[1]);
