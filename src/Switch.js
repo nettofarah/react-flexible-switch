@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import { merge, events, disableScroll, reEnableScroll } from './utils';
 
-
 class Switch extends React.Component {
 
 	constructor(props) {
