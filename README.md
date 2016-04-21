@@ -4,6 +4,8 @@ Easy and Flexible React switches with support for custom styles.
 
 ## Demo & Examples
 
+![switch](https://cloud.githubusercontent.com/assets/270688/14726482/870deed8-07d7-11e6-9c78-be337a1159f0.gif)
+
 Live demo: [http://nettofarah.github.io/react-flexible-switch](http://nettofarah.github.io/react-flexible-switch/)
 To build the examples locally, run:
 
