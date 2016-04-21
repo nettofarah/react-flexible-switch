@@ -11,7 +11,20 @@ class Switch extends React.Component {
 		this.onSlideStart = this.onSlideStart.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 
-		const activeState = !!this.props.active ? true : false;
+		let activeState = false;
+
+		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
+			activeState = false;
+		}
+
+		if (typeof this.props.active != 'undefined' && this.props.active) {
+			activeState = true;
+		}
+
+		if (typeof this.props.inactive != 'undefined' && this.props.inactive) {
+			activeState = false;
+		}
+
 		this.state = { sliding: false, active: activeState };
 	}
 
@@ -23,7 +36,7 @@ class Switch extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.on != prevState.on) {
+		if (this.state.active != prevState.active) {
 			const callback = this.state.active ? this.props.onActive : this.props.onInactive;
 			callback && callback();
 		}
@@ -166,7 +179,6 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
-	on: true,
 	onInactive: function() {},
 	onActive: function() {},
 	circleStyles: defaultCircleStyles,
