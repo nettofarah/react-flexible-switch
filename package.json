@@ -1,6 +1,6 @@
 {
   "name": "react-flexible-switch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple and flexible React Switch",
   "main": "lib/Switch.js",
   "author": "Netto Farah",
@@ -53,14 +53,8 @@
     "react-switch",
     "react-toggle"
   ],
-  "jest": {
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils"
-    ]
-  },
   "files": [
+    "lib",
     "src"
   ]
 }
