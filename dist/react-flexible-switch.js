@@ -121,7 +121,7 @@ var Switch = (function (_React$Component) {
 			var translation = this.state.active ? offset : 0;
 
 			if (this.state.sliding && this.state.active) {
-				translation -= circleStyles.diameter / 2 + switchStyles.padding;
+				translation -= circleStyles.diameter / 2 + switchStyles.padding / 2;
 			}
 
 			return {
@@ -181,7 +181,8 @@ var defaultSwitchStyles = {
 	border: '1px solid #CFCFCF',
 	display: 'flex',
 	position: 'relative',
-	backgroundColor: 'white'
+	backgroundColor: 'white',
+	boxSizing: 'content-box'
 };
 
 var defaultCircleStyles = {
