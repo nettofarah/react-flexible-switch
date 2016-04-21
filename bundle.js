@@ -227,7 +227,7 @@ var defaultSwitchStyles = {
 	display: 'flex',
 	position: 'relative',
 	backgroundColor: 'white',
-	boxSizing: 'content-box'
+	'box-sizing': 'content-box'
 };
 
 var defaultCircleStyles = {
