@@ -1,15 +1,13 @@
-# switch
-
-__COMPONENT DESCRIPTION GOES HERE__
+# React Flexible Switch
+Easy and Flexible React switches with support for custom styles.
 
 
 ## Demo & Examples
 
-Live demo: [nettofarah.github.io/react-switch](http://nettofarah.github.io/react-switch/)
-
+Live demo: [http://nettofarah.github.io/react-flexible-switch](http://nettofarah.github.io/react-flexible-switch/)
 To build the examples locally, run:
 
-```
+```bash
 npm install
 npm start
 ```
@@ -24,28 +22,78 @@ The easiest way to use react-switch is to install it from NPM and include it in 
 You can also use the standalone build by including `dist/react-switch.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
 
 ```
-npm install react-switch --save
+npm install react-flexible-switch --save
 ```
 
 
 ## Usage
 
-__EXPLAIN USAGE HERE__
+Just require 'react-flexible-switch' in your app and include it in your components.
 
-```
-var Switch = require('react-switch');
-
-<Switch></Switch>
+```javascript
+const Switch = require('react-flexible-switch');
+<Switch />
 ```
 
 ### Properties
 
-* __DOCUMENT PROPERTIES HERE__
+```javascript
+Switch.propTypes = {
+	active: React.PropTypes.bool,
 
-### Notes
+	circleStyles: React.PropTypes.shape({
+		onColor: React.PropTypes.string,
+		offColor: React.PropTypes.string,
+		diameter: React.PropTypes.number
+	}),
 
-__ADDITIONAL USAGE NOTES__
+	inactive: React.PropTypes.bool,
 
+	onActive: React.PropTypes.func,
+	onInactive: React.PropTypes.func,
+
+	switchStyles: React.PropTypes.shape({
+		width: React.PropTypes.number
+	})
+};
+```
+
+#### Active / Inactive
+Allows you to start a switch either turned on or off.
+
+```javascript
+//On by default
+<Switch active />
+
+//Off by default
+<Switch inactive />
+```
+
+#### Callbacks: onActive / onInactive
+Allows you to pass in callbacks when state changes.
+
+```javascript
+const onActive = () => { console.log('active!') }
+const onInactive = () => { console.log('inactive!') }
+
+<Switch onActive={onActive} onInactive={onInactive} />
+```
+
+#### Custom Styles
+You can style both the circle and switch styles with any css property, with
+the addition of `onColor`, `offColor` and `diameter`.
+
+
+```javascript
+// Custom circle colors and size
+<Switch circleStyles={{ onColor: 'blue', offColor: 'red' }} />
+<Switch circleStyles={{ diameter: 55 }} />
+<Switch circleStyles={{ diameter: 20 }} />
+
+// Custom Switch width
+<Switch switchStyles={{ width: 50 }} />
+<Switch switchStyles={{ width: 200 }} />
+```
 
 ## Development (`src`, `lib` and the build process)
 
@@ -54,7 +102,5 @@ __ADDITIONAL USAGE NOTES__
 To build, watch and serve the examples (which will also watch the component source), run `npm start`. If you just want to watch changes to `src` and rebuild `lib`, run `npm run watch` (this is useful if you are working with `npm link`).
 
 ## License
-
-__PUT LICENSE HERE__
-
+The module is available as open source under the terms of the MIT License.
 Copyright (c) 2016 Netto Farah.

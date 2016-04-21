@@ -173,9 +173,7 @@ describe('User interaction', () => {
   });
 });
 
-describe('Labels', () => {
-
-});
+describe('Labels', () => { });
 
 function simulateEvent(eventName, el) {
   const event = new MouseEvent(eventName, { bubbles: true, cancelable: false });

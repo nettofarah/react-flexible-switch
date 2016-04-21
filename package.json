@@ -1,16 +1,16 @@
 {
-  "name": "react-switch",
-  "version": "1.0.0",
-  "description": "switch",
+  "name": "react-flexible-switch",
+  "version": "0.1",
+  "description": "Simple and flexible React Switch",
   "main": "lib/Switch.js",
   "author": "Netto Farah",
-  "homepage": "https://github.com/nettofarah/react-switch",
+  "homepage": "https://github.com/nettofarah/react-flexible-switch",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nettofarah/react-switch.git"
+    "url": "https://github.com/nettofarah/react-flexible-switch.git"
   },
   "bugs": {
-    "url": "https://github.com/nettofarah/react-switch/issues"
+    "url": "https://github.com/nettofarah/react-flexible-switch/issues"
   },
   "dependencies": {
     "classnames": "^2.1.2"

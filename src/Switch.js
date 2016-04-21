@@ -146,7 +146,8 @@ const defaultSwitchStyles = {
 	width: 100,
 	padding: 4,
 	border: '1px solid #CFCFCF',
-	display: 'inline-block',
+	display: 'flex',
+	position: 'relative',
 	backgroundColor: 'white'
 };
 
