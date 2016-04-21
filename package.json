@@ -42,7 +42,7 @@
     "publish:site": "NODE_ENV=production gulp publish:examples",
     "release": "NODE_ENV=production gulp release",
     "start": "gulp dev",
-    "test": "mocha --compilers js:babel-register",
+    "test": "NODE_ENV=test mocha --compilers js:babel-register --require ./test/helpers/fakeDom.js",
     "watch": "gulp watch:lib"
   },
   "keywords": [

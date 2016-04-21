@@ -80,6 +80,8 @@ describe('props', () => {
     assert(isOn(comp));
     assert(!called);
   });
+
+  // TODO: add tests for styles
 });
 
 describe('User interaction', () => {
@@ -169,6 +171,10 @@ describe('User interaction', () => {
       assert(isOff(switchComponent));
     });
   });
+});
+
+describe('Labels', () => {
+
 });
 
 function simulateEvent(eventName, el) {
