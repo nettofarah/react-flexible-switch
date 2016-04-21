@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Switch = require('react-switch');
+var Switch = require('react-flexible-switch');
 
 var App = React.createClass({
 	render () {
