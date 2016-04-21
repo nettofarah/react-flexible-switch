@@ -22,7 +22,7 @@ class Switch extends React.Component {
 		document.addEventListener(events.touch.stop, this.onSlideEnd, false);
 		document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
 	}
-	
+
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.on != prevState.on) {
 			const callback = this.state.active ? this.props.onActive : this.props.onInactive;
