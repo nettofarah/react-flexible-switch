@@ -39,22 +39,22 @@ const Switch = require('react-flexible-switch');
 
 ```javascript
 Switch.propTypes = {
-	active: React.PropTypes.bool,
+  active: React.PropTypes.bool,
 
-	circleStyles: React.PropTypes.shape({
-		onColor: React.PropTypes.string,
-		offColor: React.PropTypes.string,
-		diameter: React.PropTypes.number
-	}),
+  circleStyles: React.PropTypes.shape({
+    onColor: React.PropTypes.string,
+    offColor: React.PropTypes.string,
+    diameter: React.PropTypes.number
+  }),
 
-	inactive: React.PropTypes.bool,
+  inactive: React.PropTypes.bool,
 
-	onActive: React.PropTypes.func,
-	onInactive: React.PropTypes.func,
+  onActive: React.PropTypes.func,
+  onInactive: React.PropTypes.func,
 
-	switchStyles: React.PropTypes.shape({
-		width: React.PropTypes.number
-	})
+  switchStyles: React.PropTypes.shape({
+    width: React.PropTypes.number
+  })
 };
 ```
 
