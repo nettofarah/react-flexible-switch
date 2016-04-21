@@ -22,6 +22,13 @@ class Switch extends React.Component {
 		document.addEventListener(events.touch.stop, this.onSlideEnd, false);
 		document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
 	}
+	
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.on != prevState.on) {
+			const callback = this.state.active ? this.props.onActive : this.props.onInactive;
+			callback && callback();
+		}
+	}
 
 	componentWillUnmount() {
 		document.removeEventListener(events.touch.start, this.onSlideStart, false);
@@ -33,11 +40,6 @@ class Switch extends React.Component {
 	onSlideEnd() {
 		if (this.state.sliding) {
 			this.setState({ sliding: false, active: !this.state.active });
-
-			const newState = !this.state.active;
-			const callback = newState ? this.props.onActive : this.props.onInactive;
-			callback && callback();
-
 			reEnableScroll();
 		}
 	}
