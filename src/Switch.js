@@ -92,7 +92,7 @@ class Switch extends React.Component {
 		let translation = this.state.active ? offset : 0;
 
 		if (this.state.sliding && this.state.active) {
-			translation -= (circleStyles.diameter / 2 + switchStyles.padding / 2);
+			translation -= (circleStyles.diameter / 4 + switchStyles.padding / 4);
 		}
 
 		return {
@@ -117,7 +117,7 @@ class Switch extends React.Component {
 	circleDimensionsStyle() {
 		const switchStyles = this.switchStyles();
 		const circleStyles = this.circleStylesProps();
-		const width = this.state.sliding ? (circleStyles.diameter + circleStyles.diameter / 2)  : circleStyles.diameter;
+		const width = this.state.sliding ? (circleStyles.diameter + circleStyles.diameter / 4)  : circleStyles.diameter;
 		return { width, height: circleStyles.diameter };
 	}
 
