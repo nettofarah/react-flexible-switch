@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import Label from './Label';
 import { merge, events, disableScroll, reEnableScroll } from './utils';
 
 class Switch extends React.Component {
@@ -136,6 +137,9 @@ class Switch extends React.Component {
 					 className={this.classes()}
 					 ref="switch"
 					 onMouseLeave={this.onMouseLeave}>
+
+				<Label active={this.state.active} labels={this.props.labels} />
+
 				<span style={this.circleStyles()} className="circle" ref="circle"></span>
 			</span>
 		);
@@ -143,13 +147,13 @@ class Switch extends React.Component {
 }
 
 const defaultSwitchStyles = {
-	width: 100,
+	width: 80,
 	padding: 4,
 	border: '1px solid #CFCFCF',
 	display: 'flex',
 	position: 'relative',
 	backgroundColor: 'white',
-  'box-sizing': 'content-box'
+  boxSizing: 'content-box'
 };
 
 const defaultCircleStyles = {
@@ -172,6 +176,11 @@ Switch.propTypes = {
 
 	inactive: React.PropTypes.bool,
 
+	labels: React.PropTypes.shape({
+		on: React.PropTypes.string,
+		off: React.PropTypes.string
+	}),
+
 	onActive: React.PropTypes.func,
 	onInactive: React.PropTypes.func,
 
@@ -184,7 +193,8 @@ Switch.defaultProps = {
 	onInactive: function() {},
 	onActive: function() {},
 	circleStyles: defaultCircleStyles,
-	switchStyles: defaultSwitchStyles
+	switchStyles: defaultSwitchStyles,
+	labels: { on: '', off: '' }
 };
 
 export default Switch;
