@@ -23,7 +23,6 @@ export default class Label extends React.Component {
 	}
 }
 
-
 Label.propTypes = {
 	active: React.PropTypes.bool,
 	labels: React.PropTypes.shape({

@@ -117,7 +117,6 @@ class Switch extends React.Component {
 	}
 
 	circleDimensionsStyle() {
-		const switchStyles = this.switchStyles();
 		const circleStyles = this.circleStylesProps();
 		const width = this.state.sliding ? (circleStyles.diameter + circleStyles.diameter / 4)  : circleStyles.diameter;
 		return { width, height: circleStyles.diameter };
