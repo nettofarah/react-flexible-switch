@@ -13,6 +13,11 @@ class Switch extends React.Component {
 		this.onSlideStart = this.onSlideStart.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 
+		const activeState = this._resolveActiveState();
+		this.state = { sliding: false, active: activeState };
+	}
+
+	_resolveActiveState() {
 		let activeState = false;
 
 		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
@@ -27,7 +32,7 @@ class Switch extends React.Component {
 			activeState = false;
 		}
 
-		this.state = { sliding: false, active: activeState };
+		return activeState;
 	}
 
 	componentDidMount() {
