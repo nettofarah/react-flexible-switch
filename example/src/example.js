@@ -26,7 +26,7 @@ var App = React.createClass({
 				<Switch switchStyles={{ width: 200 }} />
 
 				<h2> Labels </h2>
-				<Switch labels={{ on: 'On', off: 'Off'}} />
+				<Switch labels={{ active: 'On', inactive: 'Off'}} />
 			</div>
 		);
 	}

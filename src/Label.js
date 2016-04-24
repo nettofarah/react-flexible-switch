@@ -17,7 +17,7 @@ export default class Label extends React.Component {
 	render() {
 		return (
 			<span style={this.styles()} className="label">
-				{this.props.active ? this.props.labels.on : this.props.labels.off }
+				{this.props.active ? this.props.labels.active : this.props.labels.inactive }
 			</span>
 		);
 	}
@@ -27,7 +27,7 @@ export default class Label extends React.Component {
 Label.propTypes = {
 	active: React.PropTypes.bool,
 	labels: React.PropTypes.shape({
-		on: React.PropTypes.string,
-		off: React.PropTypes.string
+		active: React.PropTypes.string,
+		inactive: React.PropTypes.string
 	})
 };
