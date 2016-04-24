@@ -182,7 +182,7 @@ function simulateEvent(eventName, el) {
 
 function isOn(comp) {
   const el = comp.refs.circle;
-  return el.style.transform === 'translateX(65px)';
+  return el.style.transform === 'translateX(45px)';
 }
 
 function isOff(comp) {
