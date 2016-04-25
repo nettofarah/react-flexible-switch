@@ -138,8 +138,7 @@ class Switch extends React.Component {
 					 ref="switch"
 					 onMouseLeave={this.onMouseLeave}>
 
-				<Label active={this.state.active} labels={this.props.labels} />
-
+				<Label active={this.state.active} labels={this.props.labels} ref="label" />
 				<span style={this.circleStyles()} className="circle" ref="circle"></span>
 			</span>
 		);

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import Switch from '../src/Switch';
+import Label from '../src/Label';
 import assert from 'assert';
 
 describe('props', () => {
@@ -173,7 +174,30 @@ describe('User interaction', () => {
   });
 });
 
-describe('Labels', () => { });
+describe('Labels', () => {
+
+  it('renders labels as instances of <Label>', () => {
+    const comp = renderComponent();
+    assert(TestUtils.isCompositeComponentWithType(comp.refs.label, Label));
+  });
+
+  it('are empty by default', () => {
+    const comp = renderComponent();
+    const labelContent = ReactDOM.findDOMNode(comp.refs.label).innerHTML;
+    assert.equal(labelContent, '');
+  });
+
+  it('can be passed in as options', () => {
+    const comp = renderComponent({ labels: { on: 'Turned On', off: 'Turned Off' }});
+    let labelContent = ReactDOM.findDOMNode(comp.refs.label).innerHTML;
+    assert.equal(labelContent, 'Turned Off');
+
+    flipSwitch(comp);
+
+    labelContent = ReactDOM.findDOMNode(comp.refs.label).innerHTML;
+    assert.equal(labelContent, 'Turned On');
+  });
+});
 
 function simulateEvent(eventName, el) {
   const event = new MouseEvent(eventName, { bubbles: true, cancelable: false });
@@ -182,7 +206,7 @@ function simulateEvent(eventName, el) {
 
 function isOn(comp) {
   const el = comp.refs.circle;
-  return el.style.transform === 'translateX(65px)';
+  return el.style.transform === 'translateX(45px)';
 }
 
 function isOff(comp) {
