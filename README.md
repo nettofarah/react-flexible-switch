@@ -51,6 +51,11 @@ Switch.propTypes = {
 
   inactive: React.PropTypes.bool,
 
+	labels: React.PropTypes.shape({
+		on: React.PropTypes.string,
+		off: React.PropTypes.string
+	}),
+
   onActive: React.PropTypes.func,
   onInactive: React.PropTypes.func,
 
@@ -95,6 +100,14 @@ the addition of `onColor`, `offColor` and `diameter`.
 // Custom Switch width
 <Switch switchStyles={{ width: 50 }} />
 <Switch switchStyles={{ width: 200 }} />
+```
+
+#### Labels
+Labels for the `on` and `off` states can be set by using the `labels` property.
+
+```javascript
+<Switch labels={{ on: 'Turned On', off: 'Turned Off' }} />
+<Switch labels={{ on: 'On', off: 'Off' }} />
 ```
 
 ## Development (`src`, `lib` and the build process)
