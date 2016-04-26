@@ -45,7 +45,13 @@ var App = React.createClass({
 			),
 			React.createElement(Switch, { switchStyles: { width: 50 } }),
 			React.createElement('br', null),
-			React.createElement(Switch, { switchStyles: { width: 200 } })
+			React.createElement(Switch, { switchStyles: { width: 200 } }),
+			React.createElement(
+				'h2',
+				null,
+				' Labels '
+			),
+			React.createElement(Switch, { labels: { on: 'On', off: 'Off' } })
 		);
 	}
 });
