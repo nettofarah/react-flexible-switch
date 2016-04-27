@@ -51,10 +51,12 @@ Switch.propTypes = {
 
   inactive: React.PropTypes.bool,
 
-	labels: React.PropTypes.shape({
-		on: React.PropTypes.string,
-		off: React.PropTypes.string
-	}),
+  labels: React.PropTypes.shape({
+    on: React.PropTypes.string,
+    off: React.PropTypes.string
+  }),
+
+  locked: React.PropTypes.bool,
 
   onActive: React.PropTypes.func,
   onInactive: React.PropTypes.func,
@@ -108,6 +110,14 @@ Labels for the `on` and `off` states can be set by using the `labels` property.
 ```javascript
 <Switch labels={{ on: 'Turned On', off: 'Turned Off' }} />
 <Switch labels={{ on: 'On', off: 'Off' }} />
+```
+
+#### Blocking User Interaction
+In case you need to lock the switch and block user interaction for some reason.
+
+```javascript
+<Switch locked />
+<Switch active locked />
 ```
 
 ## Development (`src`, `lib` and the build process)
