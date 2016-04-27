@@ -38,7 +38,7 @@ describe('props', () => {
       const onActive = () => called = true;
       const comp = renderComponent({ onActive });
 
-      flipSwitch(comp);
+      flip(comp);
 
       assert(isOn(comp));
       assert(called);
@@ -50,7 +50,7 @@ describe('props', () => {
       const comp = renderComponent({ active: true, onActive });
       assert(isOn(comp));
 
-      flipSwitch(comp);
+      flip(comp);
 
       assert(isOff(comp));
       assert(!called);
@@ -63,7 +63,7 @@ describe('props', () => {
       const onInactive = () => called = true;
       const comp = renderComponent({ active: true, onInactive });
 
-      flipSwitch(comp);
+      flip(comp);
 
       assert(isOff(comp));
       assert(called);
@@ -75,10 +75,28 @@ describe('props', () => {
       const comp = renderComponent({ inactive: true, onInactive });
       assert(isOff(comp));
 
-      flipSwitch(comp);
+      flip(comp);
 
       assert(isOn(comp));
       assert(!called);
+    });
+  });
+
+  describe('locked', () => {
+    it('turned on -> locks the switch, blocking user interaction', () => {
+      const comp = renderComponent({ active: true, locked: true });
+      assert(isOn(comp));
+
+      flip(comp);
+      assert(isOn(comp));
+    });
+
+    it('turned off -> locks the switch, blocking user interaction', () => {
+      const comp = renderComponent({ inactive: true, locked: true });
+      assert(isOff(comp));
+
+      flip(comp);
+      assert(isOff(comp));
     });
   });
 
@@ -192,7 +210,7 @@ describe('Labels', () => {
     let labelContent = ReactDOM.findDOMNode(comp.refs.label).innerHTML;
     assert.equal(labelContent, 'Turned Off');
 
-    flipSwitch(comp);
+    flip(comp);
 
     labelContent = ReactDOM.findDOMNode(comp.refs.label).innerHTML;
     assert.equal(labelContent, 'Turned On');
@@ -223,7 +241,7 @@ function renderComponent(props={}) {
   return ReactDOM.render(<Switch {...props} />, document.getElementById('main'));
 }
 
-function flipSwitch(comp) {
+function flip(comp) {
   simulateEvent('mousedown', comp.refs.circle);
   simulateEvent('mouseup', comp.refs.circle);
 }
