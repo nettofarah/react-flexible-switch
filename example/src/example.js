@@ -27,6 +27,11 @@ var App = React.createClass({
 
 				<h2> Labels </h2>
 				<Switch labels={{ on: 'On', off: 'Off'}} />
+
+				<h2> Locking the Switch </h2>
+				<Switch locked />
+				<br />
+				<Switch active locked />
 			</div>
 		);
 	}

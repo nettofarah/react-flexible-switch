@@ -30,6 +30,10 @@ class Switch extends React.Component {
 	}
 
 	componentDidMount() {
+		if (!!this.props.locked) {
+			return;
+		}
+
 		document.addEventListener(events.touch.start, this.onSlideStart, false);
 		document.addEventListener(events.mouse.start, this.onSlideStart, false);
 		document.addEventListener(events.touch.stop, this.onSlideEnd, false);
@@ -44,6 +48,10 @@ class Switch extends React.Component {
 	}
 
 	componentWillUnmount() {
+		if (!!this.props.locked) {
+			return;
+		}
+
 		document.removeEventListener(events.touch.start, this.onSlideStart, false);
 		document.removeEventListener(events.mouse.start, this.onSlideStart, false);
 		document.removeEventListener(events.touch.stop, this.onSlideEnd, false);
@@ -179,6 +187,8 @@ Switch.propTypes = {
 		on: React.PropTypes.string,
 		off: React.PropTypes.string
 	}),
+
+	locked: React.PropTypes.bool,
 
 	onActive: React.PropTypes.func,
 	onInactive: React.PropTypes.func,
