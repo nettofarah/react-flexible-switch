@@ -68,18 +68,18 @@ describe('props', () => {
       assert(isOff(comp));
       assert(called);
     });
-  });
 
-  it('does not get called when the switch is turned on', () => {
-    let called = false;
-    const onInactive = () => called = true;
-    const comp = renderComponent({ inactive: true, onInactive });
-    assert(isOff(comp));
+    it('does not get called when the switch is turned on', () => {
+      let called = false;
+      const onInactive = () => called = true;
+      const comp = renderComponent({ inactive: true, onInactive });
+      assert(isOff(comp));
 
-    flipSwitch(comp);
+      flipSwitch(comp);
 
-    assert(isOn(comp));
-    assert(!called);
+      assert(isOn(comp));
+      assert(!called);
+    });
   });
 
   // TODO: add tests for styles
