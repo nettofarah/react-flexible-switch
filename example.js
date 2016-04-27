@@ -51,7 +51,15 @@ var App = React.createClass({
 				null,
 				' Labels '
 			),
-			React.createElement(Switch, { labels: { on: 'On', off: 'Off' } })
+			React.createElement(Switch, { labels: { on: 'On', off: 'Off' } }),
+			React.createElement(
+				'h2',
+				null,
+				' Locking the Switch '
+			),
+			React.createElement(Switch, { locked: true }),
+			React.createElement('br', null),
+			React.createElement(Switch, { active: true, locked: true })
 		);
 	}
 });
