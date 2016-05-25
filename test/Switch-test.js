@@ -103,6 +103,61 @@ describe('props', () => {
   // TODO: add tests for styles
 });
 
+
+describe('mobile devices', () => {
+  let switchComponent, node, circle;
+
+  beforeEach(() => {
+    window['ontouchstart'] = function() {};
+    switchComponent = renderComponent();
+    node = switchComponent.refs.switch;
+    circle = switchComponent.refs.circle;
+  });
+
+  afterEach(() => {
+    unmount();
+    window['ontouchstart'] = undefined;
+  });
+
+  describe('can be turned on', () => {
+    it('by touching the circle', () => {
+      simulateEvent('touchstart', circle);
+      simulateEvent('touchend', circle);
+
+      assert(isOn(switchComponent));
+    });
+
+    it('by touching the switch', () => {
+      simulateEvent('touchstart', node);
+      simulateEvent('touchend', node);
+
+      assert(isOn(switchComponent));
+    });
+  });
+
+  describe('can be turned off', () => {
+    it('by touching the circle', () => {
+      simulateEvent('touchstart', circle);
+      simulateEvent('touchend', circle);
+
+      simulateEvent('touchstart', circle);
+      simulateEvent('touchend', circle);
+
+      assert(isOff(switchComponent));
+    });
+
+    it('by touching the switch', () => {
+      simulateEvent('touchstart', node);
+      simulateEvent('touchend', node);
+
+      simulateEvent('touchstart', node);
+      simulateEvent('touchend', node);
+
+      assert(isOff(switchComponent));
+    });
+  });
+});
+
 describe('User interaction', () => {
   let switchComponent, node, circle;
 
@@ -111,6 +166,7 @@ describe('User interaction', () => {
     node = switchComponent.refs.switch;
     circle = switchComponent.refs.circle;
   });
+
 
   afterEach(unmount);
 
@@ -127,23 +183,9 @@ describe('User interaction', () => {
       assert(isOn(switchComponent));
     });
 
-    it('by touching the circle', () => {
-      simulateEvent('touchstart', circle);
-      simulateEvent('touchend', circle);
-
-      assert(isOn(switchComponent));
-    });
-
     it('by clicking the switch', () => {
       simulateEvent('mousedown', node);
       simulateEvent('mouseup', node);
-
-      assert(isOn(switchComponent));
-    });
-
-    it('by touching the switch', () => {
-      simulateEvent('touchstart', node);
-      simulateEvent('touchend', node);
 
       assert(isOn(switchComponent));
     });
@@ -160,32 +202,12 @@ describe('User interaction', () => {
       assert(isOff(switchComponent));
     });
 
-    it('by touching the circle', () => {
-      simulateEvent('touchstart', circle);
-      simulateEvent('touchend', circle);
-
-      simulateEvent('touchstart', circle);
-      simulateEvent('touchend', circle);
-
-      assert(isOff(switchComponent));
-    });
-
     it('by clicking the switch', () => {
       simulateEvent('mousedown', node);
       simulateEvent('mouseup', node);
 
       simulateEvent('mousedown', node);
       simulateEvent('mouseup', node);
-
-      assert(isOff(switchComponent));
-    });
-
-    it('by touching the switch', () => {
-      simulateEvent('touchstart', node);
-      simulateEvent('touchend', node);
-
-      simulateEvent('touchstart', node);
-      simulateEvent('touchend', node);
 
       assert(isOff(switchComponent));
     });

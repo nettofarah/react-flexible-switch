@@ -12,6 +12,8 @@ class Switch extends React.Component {
 		this.onSlideStart = this.onSlideStart.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 
+		this.isTouchDevice = window['ontouchstart'] !== undefined;
+
 		let activeState = false;
 
 		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
@@ -34,10 +36,13 @@ class Switch extends React.Component {
 			return;
 		}
 
-		document.addEventListener(events.touch.start, this.onSlideStart, false);
-		document.addEventListener(events.mouse.start, this.onSlideStart, false);
-		document.addEventListener(events.touch.stop, this.onSlideEnd, false);
-		document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
+		if (this.isTouchDevice) {
+			document.addEventListener(events.touch.start, this.onSlideStart, false);
+			document.addEventListener(events.touch.stop, this.onSlideEnd, false);
+		} else {
+			document.addEventListener(events.mouse.start, this.onSlideStart, false);
+			document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -52,10 +57,13 @@ class Switch extends React.Component {
 			return;
 		}
 
-		document.removeEventListener(events.touch.start, this.onSlideStart, false);
-		document.removeEventListener(events.mouse.start, this.onSlideStart, false);
-		document.removeEventListener(events.touch.stop, this.onSlideEnd, false);
-		document.removeEventListener(events.mouse.stop, this.onSlideEnd, false);
+		if (this.isTouchDevice) {
+			document.removeEventListener(events.touch.start, this.onSlideStart, false);
+			document.removeEventListener(events.touch.stop, this.onSlideEnd, false);
+		} else {
+			document.removeEventListener(events.mouse.start, this.onSlideStart, false);
+			document.removeEventListener(events.mouse.stop, this.onSlideEnd, false);
+		}
 	}
 
 	onSlideEnd() {
