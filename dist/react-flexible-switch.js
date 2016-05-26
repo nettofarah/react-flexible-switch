@@ -113,6 +113,8 @@ var Switch = (function (_React$Component) {
 		this.onSlideStart = this.onSlideStart.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 
+		this.isTouchDevice = window['ontouchstart'] !== undefined;
+
 		var activeState = false;
 
 		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
@@ -137,10 +139,13 @@ var Switch = (function (_React$Component) {
 				return;
 			}
 
-			document.addEventListener(_utils.events.touch.start, this.onSlideStart, false);
-			document.addEventListener(_utils.events.mouse.start, this.onSlideStart, false);
-			document.addEventListener(_utils.events.touch.stop, this.onSlideEnd, false);
-			document.addEventListener(_utils.events.mouse.stop, this.onSlideEnd, false);
+			if (this.isTouchDevice) {
+				document.addEventListener(_utils.events.touch.start, this.onSlideStart, false);
+				document.addEventListener(_utils.events.touch.stop, this.onSlideEnd, false);
+			} else {
+				document.addEventListener(_utils.events.mouse.start, this.onSlideStart, false);
+				document.addEventListener(_utils.events.mouse.stop, this.onSlideEnd, false);
+			}
 		}
 	}, {
 		key: 'componentDidUpdate',
@@ -157,10 +162,13 @@ var Switch = (function (_React$Component) {
 				return;
 			}
 
-			document.removeEventListener(_utils.events.touch.start, this.onSlideStart, false);
-			document.removeEventListener(_utils.events.mouse.start, this.onSlideStart, false);
-			document.removeEventListener(_utils.events.touch.stop, this.onSlideEnd, false);
-			document.removeEventListener(_utils.events.mouse.stop, this.onSlideEnd, false);
+			if (this.isTouchDevice) {
+				document.removeEventListener(_utils.events.touch.start, this.onSlideStart, false);
+				document.removeEventListener(_utils.events.touch.stop, this.onSlideEnd, false);
+			} else {
+				document.removeEventListener(_utils.events.mouse.start, this.onSlideStart, false);
+				document.removeEventListener(_utils.events.mouse.stop, this.onSlideEnd, false);
+			}
 		}
 	}, {
 		key: 'onSlideEnd',
