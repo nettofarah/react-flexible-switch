@@ -14,19 +14,7 @@ class Switch extends React.Component {
 
 		this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-		let activeState = false;
-
-		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
-			activeState = false;
-		}
-
-		if (typeof this.props.active != 'undefined' && this.props.active) {
-			activeState = true;
-		}
-
-		if (typeof this.props.inactive != 'undefined' && this.props.inactive) {
-			activeState = false;
-		}
+		const activeState = this.activeStateFromProps(this.props);
 
 		this.state = { sliding: false, active: activeState };
 	}
@@ -47,6 +35,12 @@ class Switch extends React.Component {
         this.addListener();
       }
     }
+    if(nextProps.active !== this.props.active) {
+      const newActiveState = this.activeStateFromProps(nextProps);
+      if(newActiveState !== this.state.active) {
+        this.state = { active: newActiveState };
+      }
+    }
   }
 
 	componentDidUpdate(prevProps, prevState) {
@@ -63,6 +57,22 @@ class Switch extends React.Component {
 
 		this.removeListener();
 	}
+
+  activeStateFromProps (props) {
+    let activeState = false;
+    if (typeof props.active == 'undefined' && typeof props.inactive == 'undefined') {
+			activeState = false;
+		}
+
+		if (typeof props.active != 'undefined' && props.active) {
+			activeState = true;
+		}
+
+		if (typeof props.inactive != 'undefined' && props.inactive) {
+			activeState = false;
+		}
+    return activeState;
+  }
 
   addListener() {
     if (this.isTouchDevice) {

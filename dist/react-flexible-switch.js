@@ -115,19 +115,7 @@ var Switch = (function (_React$Component) {
 
 		this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-		var activeState = false;
-
-		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
-			activeState = false;
-		}
-
-		if (typeof this.props.active != 'undefined' && this.props.active) {
-			activeState = true;
-		}
-
-		if (typeof this.props.inactive != 'undefined' && this.props.inactive) {
-			activeState = false;
-		}
+		var activeState = this.activeStateFromProps(this.props);
 
 		this.state = { sliding: false, active: activeState };
 	}
@@ -151,6 +139,12 @@ var Switch = (function (_React$Component) {
 					this.addListener();
 				}
 			}
+			if (nextProps.active !== this.props.active) {
+				var newActiveState = this.activeStateFromProps(nextProps);
+				if (newActiveState !== this.state.active) {
+					this.state = { active: newActiveState };
+				}
+			}
 		}
 	}, {
 		key: 'componentDidUpdate',
@@ -168,6 +162,23 @@ var Switch = (function (_React$Component) {
 			}
 
 			this.removeListener();
+		}
+	}, {
+		key: 'activeStateFromProps',
+		value: function activeStateFromProps(props) {
+			var activeState = false;
+			if (typeof props.active == 'undefined' && typeof props.inactive == 'undefined') {
+				activeState = false;
+			}
+
+			if (typeof props.active != 'undefined' && props.active) {
+				activeState = true;
+			}
+
+			if (typeof props.inactive != 'undefined' && props.inactive) {
+				activeState = false;
+			}
+			return activeState;
 		}
 	}, {
 		key: 'addListener',
