@@ -3,6 +3,10 @@ var ReactDOM = require('react-dom');
 var Switch = require('react-flexible-switch');
 
 var App = React.createClass({
+	getInitialState() {
+		return { locked: true, externalActive: true }
+	},
+
 	render () {
 		return (
 			<div>
@@ -29,9 +33,23 @@ var App = React.createClass({
 				<Switch labels={{ on: 'On', off: 'Off'}} />
 
 				<h2> Locking the Switch </h2>
-				<Switch locked />
+				<button onClick={() => this.setState({ locked: false})}>Unlock Switches</button>
+				<button onClick={() => this.setState({ locked: true})}>Lock Switches</button>
 				<br />
-				<Switch active locked />
+				<br />
+
+				<Switch locked={this.state.locked} />
+				<br />
+				<Switch active locked={this.state.locked} />
+
+				<h2> External Controls </h2>
+				<button onClick={() => this.setState({ externalActive: !this.state.externalActive})}>Toggle Switches</button>
+				<br />
+				<br />
+
+				<Switch locked active={this.state.externalActive} />
+				<br />
+				<Switch locked active={!this.state.externalActive} />
 			</div>
 		);
 	}

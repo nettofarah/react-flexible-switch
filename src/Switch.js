@@ -28,16 +28,15 @@ class Switch extends React.Component {
 	}
 
   componentWillReceiveProps(nextProps) {
-    if(!!nextProps.locked != !!this.props.locked) {
-      if(!!nextProps.locked) {
-        this.removeListener();
-      } else {
-        this.addListener();
-      }
+    const lockedChanged = nextProps.locked !== this.props.locked;
+    if (lockedChanged) {
+      nextProps.locked ? this.removeListener() : this.addListener();
     }
-    if(nextProps.active !== this.props.active) {
+
+    if (nextProps.active !== this.props.active) {
       const newActiveState = this.activeStateFromProps(nextProps);
-      if(newActiveState !== this.state.active) {
+
+      if (newActiveState !== this.state.active) {
         this.state = { active: newActiveState };
       }
     }
@@ -60,6 +59,7 @@ class Switch extends React.Component {
 
   activeStateFromProps (props) {
     let activeState = false;
+
     if (typeof props.active == 'undefined' && typeof props.inactive == 'undefined') {
 			activeState = false;
 		}
