@@ -115,19 +115,7 @@ var Switch = (function (_React$Component) {
 
 		this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-		var activeState = false;
-
-		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
-			activeState = false;
-		}
-
-		if (typeof this.props.active != 'undefined' && this.props.active) {
-			activeState = true;
-		}
-
-		if (typeof this.props.inactive != 'undefined' && this.props.inactive) {
-			activeState = false;
-		}
+		var activeState = this.activeStateFromProps(this.props);
 
 		this.state = { sliding: false, active: activeState };
 	}
@@ -139,12 +127,23 @@ var Switch = (function (_React$Component) {
 				return;
 			}
 
-			if (this.isTouchDevice) {
-				document.addEventListener(_utils.events.touch.start, this.onSlideStart, false);
-				document.addEventListener(_utils.events.touch.stop, this.onSlideEnd, false);
-			} else {
-				document.addEventListener(_utils.events.mouse.start, this.onSlideStart, false);
-				document.addEventListener(_utils.events.mouse.stop, this.onSlideEnd, false);
+			this.addListener();
+		}
+	}, {
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			if (!!nextProps.locked != !!this.props.locked) {
+				if (!!nextProps.locked) {
+					this.removeListener();
+				} else {
+					this.addListener();
+				}
+			}
+			if (nextProps.active !== this.props.active) {
+				var newActiveState = this.activeStateFromProps(nextProps);
+				if (newActiveState !== this.state.active) {
+					this.state = { active: newActiveState };
+				}
 			}
 		}
 	}, {
@@ -162,6 +161,39 @@ var Switch = (function (_React$Component) {
 				return;
 			}
 
+			this.removeListener();
+		}
+	}, {
+		key: 'activeStateFromProps',
+		value: function activeStateFromProps(props) {
+			var activeState = false;
+			if (typeof props.active == 'undefined' && typeof props.inactive == 'undefined') {
+				activeState = false;
+			}
+
+			if (typeof props.active != 'undefined' && props.active) {
+				activeState = true;
+			}
+
+			if (typeof props.inactive != 'undefined' && props.inactive) {
+				activeState = false;
+			}
+			return activeState;
+		}
+	}, {
+		key: 'addListener',
+		value: function addListener() {
+			if (this.isTouchDevice) {
+				document.addEventListener(_utils.events.touch.start, this.onSlideStart, false);
+				document.addEventListener(_utils.events.touch.stop, this.onSlideEnd, false);
+			} else {
+				document.addEventListener(_utils.events.mouse.start, this.onSlideStart, false);
+				document.addEventListener(_utils.events.mouse.stop, this.onSlideEnd, false);
+			}
+		}
+	}, {
+		key: 'removeListener',
+		value: function removeListener() {
 			if (this.isTouchDevice) {
 				document.removeEventListener(_utils.events.touch.start, this.onSlideStart, false);
 				document.removeEventListener(_utils.events.touch.stop, this.onSlideEnd, false);

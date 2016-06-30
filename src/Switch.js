@@ -14,19 +14,7 @@ class Switch extends React.Component {
 
 		this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-		let activeState = false;
-
-		if (typeof this.props.active == 'undefined' && typeof this.props.inactive == 'undefined') {
-			activeState = false;
-		}
-
-		if (typeof this.props.active != 'undefined' && this.props.active) {
-			activeState = true;
-		}
-
-		if (typeof this.props.inactive != 'undefined' && this.props.inactive) {
-			activeState = false;
-		}
+		const activeState = this.activeStateFromProps(this.props);
 
 		this.state = { sliding: false, active: activeState };
 	}
@@ -36,14 +24,24 @@ class Switch extends React.Component {
 			return;
 		}
 
-		if (this.isTouchDevice) {
-			document.addEventListener(events.touch.start, this.onSlideStart, false);
-			document.addEventListener(events.touch.stop, this.onSlideEnd, false);
-		} else {
-			document.addEventListener(events.mouse.start, this.onSlideStart, false);
-			document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
-		}
+		this.addListener();
 	}
+
+  componentWillReceiveProps(nextProps) {
+    if(!!nextProps.locked != !!this.props.locked) {
+      if(!!nextProps.locked) {
+        this.removeListener();
+      } else {
+        this.addListener();
+      }
+    }
+    if(nextProps.active !== this.props.active) {
+      const newActiveState = this.activeStateFromProps(nextProps);
+      if(newActiveState !== this.state.active) {
+        this.state = { active: newActiveState };
+      }
+    }
+  }
 
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.active != prevState.active) {
@@ -57,14 +55,44 @@ class Switch extends React.Component {
 			return;
 		}
 
-		if (this.isTouchDevice) {
+		this.removeListener();
+	}
+
+  activeStateFromProps (props) {
+    let activeState = false;
+    if (typeof props.active == 'undefined' && typeof props.inactive == 'undefined') {
+			activeState = false;
+		}
+
+		if (typeof props.active != 'undefined' && props.active) {
+			activeState = true;
+		}
+
+		if (typeof props.inactive != 'undefined' && props.inactive) {
+			activeState = false;
+		}
+    return activeState;
+  }
+
+  addListener() {
+    if (this.isTouchDevice) {
+			document.addEventListener(events.touch.start, this.onSlideStart, false);
+			document.addEventListener(events.touch.stop, this.onSlideEnd, false);
+		} else {
+			document.addEventListener(events.mouse.start, this.onSlideStart, false);
+			document.addEventListener(events.mouse.stop, this.onSlideEnd, false);
+		}
+  }
+
+  removeListener() {
+    if (this.isTouchDevice) {
 			document.removeEventListener(events.touch.start, this.onSlideStart, false);
 			document.removeEventListener(events.touch.stop, this.onSlideEnd, false);
 		} else {
 			document.removeEventListener(events.mouse.start, this.onSlideStart, false);
 			document.removeEventListener(events.mouse.stop, this.onSlideEnd, false);
 		}
-	}
+  }
 
 	onSlideEnd() {
 		if (this.state.sliding) {
