@@ -8,7 +8,13 @@ var Switch = require('react-flexible-switch');
 var App = React.createClass({
 	displayName: 'App',
 
+	getInitialState: function getInitialState() {
+		return { locked: true, externalActive: true };
+	},
+
 	render: function render() {
+		var _this = this;
+
 		return React.createElement(
 			'div',
 			null,
@@ -57,9 +63,42 @@ var App = React.createClass({
 				null,
 				' Locking the Switch '
 			),
-			React.createElement(Switch, { locked: true }),
+			React.createElement(
+				'button',
+				{ onClick: function () {
+						return _this.setState({ locked: false });
+					} },
+				'Unlock Switches'
+			),
+			React.createElement(
+				'button',
+				{ onClick: function () {
+						return _this.setState({ locked: true });
+					} },
+				'Lock Switches'
+			),
 			React.createElement('br', null),
-			React.createElement(Switch, { active: true, locked: true })
+			React.createElement('br', null),
+			React.createElement(Switch, { locked: this.state.locked }),
+			React.createElement('br', null),
+			React.createElement(Switch, { active: true, locked: this.state.locked }),
+			React.createElement(
+				'h2',
+				null,
+				' External Controls '
+			),
+			React.createElement(
+				'button',
+				{ onClick: function () {
+						return _this.setState({ externalActive: !_this.state.externalActive });
+					} },
+				'Toggle Switches'
+			),
+			React.createElement('br', null),
+			React.createElement('br', null),
+			React.createElement(Switch, { locked: true, active: this.state.externalActive }),
+			React.createElement('br', null),
+			React.createElement(Switch, { locked: true, active: !this.state.externalActive })
 		);
 	}
 });
