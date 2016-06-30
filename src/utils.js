@@ -2,7 +2,7 @@ export const events = {
   touch: {
     start: 'touchstart',
     stop: 'touchend',
-		move: 'touchmove'
+    move: 'touchmove'
   },
   mouse: {
     start: 'mousedown',
@@ -11,7 +11,7 @@ export const events = {
 };
 
 export function merge(...hashes) {
-	return Object.assign({}, ...hashes);
+  return Object.assign({}, ...hashes);
 }
 
 export function disableScroll() {
@@ -23,5 +23,5 @@ export function reEnableScroll() {
 }
 
 function preventScroll(e) {
-	e.preventDefault();
+  e.preventDefault();
 }
