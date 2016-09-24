@@ -16,19 +16,16 @@ describe('props', () => {
     assert(typeof props.switchStyles === 'object');
   });
 
-  describe('active', () => {
+  describe('value', () => {
 
     it('turns the switch on', () => {
-      const comp = renderComponent({ active: true });
+      const comp = renderComponent({ value: true });
       assert(isOn(comp));
     });
 
     it('turns the switch off', () => {
-      const comp = renderComponent({ active: false });
+      const comp = renderComponent({ value: false });
       assert(isOff(comp));
-
-      const compOff = renderComponent({ inactive: true });
-      assert(isOff(compOff));
     });
   });
 
@@ -47,7 +44,7 @@ describe('props', () => {
     it('does not get called when the switch is turned off', () => {
       let called = false;
       const onActive = () => called = true;
-      const comp = renderComponent({ active: true, onActive });
+      const comp = renderComponent({ value: true, onActive });
       assert(isOn(comp));
 
       flip(comp);
@@ -61,7 +58,7 @@ describe('props', () => {
     it('gets called when the switch is turned off', () => {
       let called = false;
       const onInactive = () => called = true;
-      const comp = renderComponent({ active: true, onInactive });
+      const comp = renderComponent({ value: true, onInactive });
 
       flip(comp);
 
@@ -72,7 +69,7 @@ describe('props', () => {
     it('does not get called when the switch is turned on', () => {
       let called = false;
       const onInactive = () => called = true;
-      const comp = renderComponent({ inactive: true, onInactive });
+      const comp = renderComponent({ value: false, onInactive });
       assert(isOff(comp));
 
       flip(comp);
@@ -84,7 +81,7 @@ describe('props', () => {
 
   describe('locked', () => {
     it('turned on -> locks the switch, blocking user interaction', () => {
-      const comp = renderComponent({ active: true, locked: true });
+      const comp = renderComponent({ value: true, locked: true });
       assert(isOn(comp));
 
       flip(comp);
@@ -92,7 +89,7 @@ describe('props', () => {
     });
 
     it('turned off -> locks the switch, blocking user interaction', () => {
-      const comp = renderComponent({ inactive: true, locked: true });
+      const comp = renderComponent({ value: false, locked: true });
       assert(isOff(comp));
 
       flip(comp);

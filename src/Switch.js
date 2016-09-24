@@ -14,9 +14,7 @@ class Switch extends React.Component {
 
     this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-    const activeState = this.activeStateFromProps(this.props);
-
-    this.state = { sliding: false, active: activeState };
+    this.state = { sliding: false, active: this.props.value };
   }
 
   componentDidMount() {
@@ -33,8 +31,8 @@ class Switch extends React.Component {
       nextProps.locked ? this.removeListener() : this.addListener();
     }
 
-    if (nextProps.active !== this.props.active) {
-      const newActiveState = this.activeStateFromProps(nextProps);
+    if (nextProps.value !== this.props.value) {
+      const newActiveState = nextProps.value
 
       if (newActiveState !== this.state.active) {
         this.state = { active: newActiveState };
@@ -55,23 +53,6 @@ class Switch extends React.Component {
     }
 
     this.removeListener();
-  }
-
-  activeStateFromProps (props) {
-    let activeState = false;
-
-    if (typeof props.active == 'undefined' && typeof props.inactive == 'undefined') {
-      activeState = false;
-    }
-
-    if (typeof props.active != 'undefined' && props.active) {
-      activeState = true;
-    }
-
-    if (typeof props.inactive != 'undefined' && props.inactive) {
-      activeState = false;
-    }
-    return activeState;
   }
 
   addListener() {
@@ -182,8 +163,8 @@ class Switch extends React.Component {
       ref="switch"
       onMouseLeave={this.onMouseLeave}>
 
-      <Label active={this.state.active} labels={this.props.labels} ref="label" />
-      <span style={this.circleStyles()} className="circle" ref="circle"></span>
+        <Label active={this.state.active} labels={this.props.labels} ref="label" />
+        <span style={this.circleStyles()} className="circle" ref="circle"></span>
       </span>
     );
   }
@@ -209,15 +190,13 @@ const defaultCircleStyles = {
 };
 
 Switch.propTypes = {
-  active: React.PropTypes.bool,
+  value: React.PropTypes.bool,
 
   circleStyles: React.PropTypes.shape({
     onColor: React.PropTypes.string,
     offColor: React.PropTypes.string,
     diameter: React.PropTypes.number
   }),
-
-  inactive: React.PropTypes.bool,
 
   labels: React.PropTypes.shape({
     on: React.PropTypes.string,
