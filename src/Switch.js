@@ -18,40 +18,26 @@ class Switch extends React.Component {
   }
 
   componentDidMount() {
-    if (!!this.props.locked) {
-      return;
-    }
-
     this.addListener();
   }
 
   componentWillReceiveProps(nextProps) {
-    const lockedChanged = nextProps.locked !== this.props.locked;
-    if (lockedChanged) {
-      nextProps.locked ? this.removeListener() : this.addListener();
+    if (nextProps.value === undefined) {
+      return;
     }
 
-    if (nextProps.value !== this.props.value) {
-      const newActiveState = nextProps.value
-
-      if (newActiveState !== this.state.active) {
-        this.state = { active: newActiveState };
-      }
+    if (nextProps.value !== this.state.active) {
+      this.setState({ active: nextProps.value })
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.active != prevState.active) {
-      const callback = this.state.active ? this.props.onActive : this.props.onInactive;
-      callback && callback();
+      this.props.onChange(this.state.active);
     }
   }
 
   componentWillUnmount() {
-    if (!!this.props.locked) {
-      return;
-    }
-
     this.removeListener();
   }
 
@@ -76,6 +62,10 @@ class Switch extends React.Component {
   }
 
   onSlideEnd() {
+    if (this.props.locked) {
+      return;
+    }
+
     if (this.state.sliding) {
       this.setState({ sliding: false, active: !this.state.active });
       reEnableScroll();
@@ -83,6 +73,10 @@ class Switch extends React.Component {
   }
 
   onSlideStart(e) {
+    if (this.props.locked) {
+      return;
+    }
+
     if (e.target == this.refs.circle || e.target == this.refs.switch) {
       this.setState({ sliding: true });
       disableScroll();
@@ -205,8 +199,7 @@ Switch.propTypes = {
 
   locked: React.PropTypes.bool,
 
-  onActive: React.PropTypes.func,
-  onInactive: React.PropTypes.func,
+  onChange: React.PropTypes.func,
 
   switchStyles: React.PropTypes.shape({
     width: React.PropTypes.number
@@ -214,11 +207,11 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
-  onInactive: function() {},
-  onActive: function() {},
+  onChange: (function() {}),
   circleStyles: defaultCircleStyles,
   switchStyles: defaultSwitchStyles,
-  labels: { on: '', off: '' }
+  labels: { on: '', off: '' },
+  locked: false
 };
 
 export default Switch;

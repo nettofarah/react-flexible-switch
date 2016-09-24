@@ -33,23 +33,22 @@ var App = React.createClass({
 				<Switch labels={{ on: 'On', off: 'Off'}} />
 
 				<h2> Locking the Switch </h2>
-				<button onClick={() => this.setState({ locked: false})}>Unlock Switches</button>
-				<button onClick={() => this.setState({ locked: true})}>Lock Switches</button>
+				<button onClick={() => this.setState({ locked: false}) }>Unlock Switch</button>
+				<button onClick={() => this.setState({ locked: true}) }>Lock Switch</button>
 				<br />
 				<br />
 
 				<Switch locked={this.state.locked} />
 				<br />
-				<Switch value={true} locked={this.state.locked} />
 
 				<h2> External Controls </h2>
-				<button onClick={() => this.setState({ externalActive: !this.state.externalActive})}>Toggle Switches</button>
+				<button onClick={() => this.setState({ switchValue: !this.state.switchValue })}>Toggle Switches</button>
 				<br />
 				<br />
 
-				<Switch locked value={this.state.externalActive} />
+				<Switch locked value={this.state.switchValue} onChange={ (value) => { this.setState({ switchValue: value }) }} />
 				<br />
-				<Switch locked value={!this.state.externalActive} />
+				<Switch locked value={!this.state.switchValue} onChange={ (value) => { this.setState({ switchValue: !value }) }} />
 			</div>
 		);
 	}
