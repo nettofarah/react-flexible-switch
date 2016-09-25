@@ -14,7 +14,7 @@ class Switch extends React.Component {
 
     this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-    this.state = { sliding: false, active: this.props.value };
+    this.state = { sliding: false, active: this.props.active };
   }
 
   componentDidMount() {
@@ -22,12 +22,12 @@ class Switch extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value === undefined) {
+    if (nextProps.active === undefined) {
       return;
     }
 
-    if (nextProps.value !== this.state.active) {
-      this.setState({ active: nextProps.value })
+    if (nextProps.active !== this.state.active) {
+      this.setState({ active: nextProps.active })
     }
   }
 
@@ -184,7 +184,7 @@ const defaultCircleStyles = {
 };
 
 Switch.propTypes = {
-  value: React.PropTypes.bool,
+  active: React.PropTypes.bool,
 
   circleStyles: React.PropTypes.shape({
     onColor: React.PropTypes.string,

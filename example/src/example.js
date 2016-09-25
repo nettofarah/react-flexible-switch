@@ -11,10 +11,10 @@ var App = React.createClass({
 		return (
 			<div>
 				<h2> On By default </h2>
-				<Switch value={true} />
+				<Switch active={true} />
 
 				<h2> Off By default </h2>
-				<Switch value={false} />
+				<Switch active={false} />
 
 				<h2> Custom Colors </h2>
 				<Switch circleStyles={{ onColor: 'blue', offColor: 'red' }} />
@@ -42,13 +42,13 @@ var App = React.createClass({
 				<br />
 
 				<h2> External Controls </h2>
-				<button onClick={() => this.setState({ switchValue: !this.state.switchValue })}>Toggle Switches</button>
+				<button onClick={() => this.setState({ switchactive: !this.state.switchactive })}>Toggle Switches</button>
 				<br />
 				<br />
 
-				<Switch locked value={this.state.switchValue} onChange={ (value) => { this.setState({ switchValue: value }) }} />
+				<Switch locked active={this.state.switchactive} onChange={ (active) => { this.setState({ switchactive: active }) }} />
 				<br />
-				<Switch locked value={!this.state.switchValue} onChange={ (value) => { this.setState({ switchValue: !value }) }} />
+				<Switch locked active={!this.state.switchactive} onChange={ (active) => { this.setState({ switchactive: !active }) }} />
 			</div>
 		);
 	}
