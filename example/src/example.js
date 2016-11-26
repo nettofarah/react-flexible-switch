@@ -46,9 +46,9 @@ var App = React.createClass({
 				<br />
 				<br />
 
-				<Switch locked active={this.state.externalValue} onChange={ (value) => { this.setState({ externalValue: value }) }} />
+				<Switch locked value={this.state.externalValue} onChange={ (value) => { this.setState({ externalValue: value }) }} />
 				<br />
-				<Switch locked active={!this.state.externalValue} onChange={ (value) => { this.setState({ externalValue: !value }) }} />
+				<Switch locked value={!this.state.externalValue} onChange={ (value) => { this.setState({ externalValue: !value }) }} />
 			</div>
 		);
 	}
