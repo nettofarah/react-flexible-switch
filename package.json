@@ -1,6 +1,6 @@
 {
   "name": "react-flexible-switch",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Simple and flexible React Switch",
   "main": "lib/Switch.js",
   "author": "Netto Farah",

@@ -64,15 +64,15 @@ Switch.propTypes = {
 };
 ```
 
-#### Active
+#### value
 Allows you to start a switch either turned on or off.
 
 ```javascript
 //On by default
-<Switch active />
+<Switch value={true} />
 
 //Off by default
-<Switch active={false} />
+<Switch value={false} />
 ```
 
 #### onChange

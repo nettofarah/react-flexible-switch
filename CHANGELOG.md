@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1 (Nov 26, 2016)
+### Fixed
+- Fixed wrong reference to `value` in Readme
+
 ## 0.5.0 (Nov 26, 2016)
 ### Added
 - Make Switch a controlled component
