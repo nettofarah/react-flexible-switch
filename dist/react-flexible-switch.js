@@ -115,7 +115,7 @@ var Switch = (function (_React$Component) {
 
     this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-    this.state = { sliding: false, active: this.props.active };
+    this.state = { sliding: false, value: this.props.value };
   }
 
   _createClass(Switch, [{
@@ -126,19 +126,19 @@ var Switch = (function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.active === undefined) {
+      if (nextProps.value === undefined) {
         return;
       }
 
-      if (nextProps.active !== this.state.active) {
-        this.setState({ active: nextProps.active });
+      if (nextProps.value !== this.state.value) {
+        this.setState({ value: nextProps.value });
       }
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      if (this.state.active != prevState.active) {
-        this.props.onChange(this.state.active);
+      if (this.state.value != prevState.value) {
+        this.props.onChange(this.state.value);
       }
     }
   }, {
@@ -176,7 +176,7 @@ var Switch = (function (_React$Component) {
       }
 
       if (this.state.sliding) {
-        this.setState({ sliding: false, active: !this.state.active });
+        this.setState({ sliding: false, value: !this.state.value });
         (0, _utils.reEnableScroll)();
       }
     }
@@ -200,7 +200,7 @@ var Switch = (function (_React$Component) {
   }, {
     key: 'classes',
     value: function classes() {
-      return (0, _classnames2['default'])('switch', { sliding: this.state.sliding }, { active: this.state.active }, { inactive: !this.state.active });
+      return (0, _classnames2['default'])('switch', { sliding: this.state.sliding }, { active: this.state.value }, { inactive: !this.state.value });
     }
   }, {
     key: 'switchStyles',
@@ -215,9 +215,9 @@ var Switch = (function (_React$Component) {
       var switchStyles = this.switchStyles();
 
       var offset = switchStyles.width - circleStyles.diameter;
-      var translation = this.state.active ? offset : 0;
+      var translation = this.state.value ? offset : 0;
 
-      if (this.state.sliding && this.state.active) {
+      if (this.state.sliding && this.state.value) {
         translation -= circleStyles.diameter / 4 + switchStyles.padding / 4;
       }
 
@@ -229,7 +229,7 @@ var Switch = (function (_React$Component) {
     key: 'backgroundStyle',
     value: function backgroundStyle() {
       var circleStyles = this.circleStylesProps();
-      var backgroundColor = this.state.active ? circleStyles.onColor : circleStyles.offColor;
+      var backgroundColor = this.state.value ? circleStyles.onColor : circleStyles.offColor;
       return { backgroundColor: backgroundColor };
     }
   }, {
@@ -264,7 +264,7 @@ var Switch = (function (_React$Component) {
           className: this.classes(),
           ref: 'switch',
           onMouseLeave: this.onMouseLeave },
-        _react2['default'].createElement(_Label2['default'], { active: this.state.active, labels: this.props.labels, ref: 'label' }),
+        _react2['default'].createElement(_Label2['default'], { active: this.state.value, labels: this.props.labels, ref: 'label' }),
         _react2['default'].createElement('span', { style: this.circleStyles(), className: 'circle', ref: 'circle' })
       );
     }
@@ -293,7 +293,7 @@ var defaultCircleStyles = {
 };
 
 Switch.propTypes = {
-  active: _react2['default'].PropTypes.bool,
+  value: _react2['default'].PropTypes.bool,
 
   circleStyles: _react2['default'].PropTypes.shape({
     onColor: _react2['default'].PropTypes.string,
