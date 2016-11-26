@@ -14,7 +14,7 @@ class Switch extends React.Component {
 
     this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-    this.state = { sliding: false, active: this.props.active };
+    this.state = { sliding: false, value: this.props.value };
   }
 
   componentDidMount() {
@@ -22,18 +22,18 @@ class Switch extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.active === undefined) {
+    if (nextProps.value === undefined) {
       return;
     }
 
-    if (nextProps.active !== this.state.active) {
-      this.setState({ active: nextProps.active })
+    if (nextProps.value !== this.state.value) {
+      this.setState({ value: nextProps.value })
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.active != prevState.active) {
-      this.props.onChange(this.state.active);
+    if (this.state.value != prevState.value) {
+      this.props.onChange(this.state.value);
     }
   }
 
@@ -67,7 +67,7 @@ class Switch extends React.Component {
     }
 
     if (this.state.sliding) {
-      this.setState({ sliding: false, active: !this.state.active });
+      this.setState({ sliding: false, value: !this.state.value });
       reEnableScroll();
     }
   }
@@ -91,8 +91,8 @@ class Switch extends React.Component {
     return classNames(
       'switch',
       { sliding: this.state.sliding },
-      { active: this.state.active },
-      { inactive: !this.state.active }
+      { active: this.state.value },
+      { inactive: !this.state.value }
     );
   }
 
@@ -109,9 +109,9 @@ class Switch extends React.Component {
     const switchStyles = this.switchStyles();
 
     const offset = switchStyles.width - circleStyles.diameter;
-    let translation = this.state.active ? offset : 0;
+    let translation = this.state.value ? offset : 0;
 
-    if (this.state.sliding && this.state.active) {
+    if (this.state.sliding && this.state.value) {
       translation -= (circleStyles.diameter / 4 + switchStyles.padding / 4);
     }
 
@@ -122,7 +122,7 @@ class Switch extends React.Component {
 
   backgroundStyle() {
     const circleStyles = this.circleStylesProps();
-    const backgroundColor = this.state.active ? circleStyles.onColor : circleStyles.offColor;
+    const backgroundColor = this.state.value ? circleStyles.onColor : circleStyles.offColor;
     return { backgroundColor };
   }
 
@@ -157,7 +157,7 @@ class Switch extends React.Component {
       ref="switch"
       onMouseLeave={this.onMouseLeave}>
 
-        <Label active={this.state.active} labels={this.props.labels} ref="label" />
+        <Label active={this.state.value} labels={this.props.labels} ref="label" />
         <span style={this.circleStyles()} className="circle" ref="circle"></span>
       </span>
     );
@@ -184,7 +184,7 @@ const defaultCircleStyles = {
 };
 
 Switch.propTypes = {
-  active: React.PropTypes.bool,
+  value: React.PropTypes.bool,
 
   circleStyles: React.PropTypes.shape({
     onColor: React.PropTypes.string,

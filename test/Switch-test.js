@@ -18,12 +18,12 @@ describe('props', () => {
   describe('active', () => {
 
     it('turns the switch on', () => {
-      const comp = renderComponent({ active: true });
+      const comp = renderComponent({ value: true });
       assert(isOn(comp));
     });
 
     it('turns the switch off', () => {
-      const comp = renderComponent({ active: false });
+      const comp = renderComponent({ value: false });
       assert(isOff(comp));
     });
   });
@@ -31,8 +31,8 @@ describe('props', () => {
   describe('onChange', () => {
     it('gets called after the switch is turned on', () => {
       let called = false;
-      const onChange = (switchActive) => {
-        if (switchActive) {
+      const onChange = (switchValue) => {
+        if (switchValue) {
           called = true
         }
       };
@@ -46,12 +46,12 @@ describe('props', () => {
 
     it('gets called when the switch is turned off', () => {
       let called = false;
-      const onChange = (switchActive) => {
-        if (!switchActive) {
+      const onChange = (switchValue) => {
+        if (!switchValue) {
           called = true;
         }
       }
-      const comp = renderComponent({ active: true, onChange });
+      const comp = renderComponent({ value: true, onChange });
 
       flip(comp);
 
@@ -62,7 +62,7 @@ describe('props', () => {
 
   describe('locked', () => {
     it('turned on -> locks the switch, blocking user interaction', () => {
-      const comp = renderComponent({ active: true, locked: true });
+      const comp = renderComponent({ value: true, locked: true });
       assert(isOn(comp));
 
       flip(comp);
@@ -70,7 +70,7 @@ describe('props', () => {
     });
 
     it('turned off -> locks the switch, blocking user interaction', () => {
-      const comp = renderComponent({ active: false, locked: true });
+      const comp = renderComponent({ value: false, locked: true });
       assert(isOff(comp));
 
       flip(comp);
