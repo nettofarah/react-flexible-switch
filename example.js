@@ -9,7 +9,7 @@ var App = React.createClass({
 	displayName: 'App',
 
 	getInitialState: function getInitialState() {
-		return { locked: true, externalActive: true };
+		return { locked: true, externalValue: true };
 	},
 
 	render: function render() {
@@ -23,13 +23,13 @@ var App = React.createClass({
 				null,
 				' On By default '
 			),
-			React.createElement(Switch, { active: true }),
+			React.createElement(Switch, { value: true }),
 			React.createElement(
 				'h2',
 				null,
 				' Off By default '
 			),
-			React.createElement(Switch, { inactive: true }),
+			React.createElement(Switch, { value: false }),
 			React.createElement(
 				'h2',
 				null,
@@ -68,20 +68,19 @@ var App = React.createClass({
 				{ onClick: function () {
 						return _this.setState({ locked: false });
 					} },
-				'Unlock Switches'
+				'Unlock Switch'
 			),
 			React.createElement(
 				'button',
 				{ onClick: function () {
 						return _this.setState({ locked: true });
 					} },
-				'Lock Switches'
+				'Lock Switch'
 			),
 			React.createElement('br', null),
 			React.createElement('br', null),
 			React.createElement(Switch, { locked: this.state.locked }),
 			React.createElement('br', null),
-			React.createElement(Switch, { active: true, locked: this.state.locked }),
 			React.createElement(
 				'h2',
 				null,
@@ -90,15 +89,19 @@ var App = React.createClass({
 			React.createElement(
 				'button',
 				{ onClick: function () {
-						return _this.setState({ externalActive: !_this.state.externalActive });
+						return _this.setState({ externalValue: !_this.state.externalValue });
 					} },
 				'Toggle Switches'
 			),
 			React.createElement('br', null),
 			React.createElement('br', null),
-			React.createElement(Switch, { locked: true, active: this.state.externalActive }),
+			React.createElement(Switch, { locked: true, active: this.state.externalValue, onChange: function (value) {
+					_this.setState({ externalValue: value });
+				} }),
 			React.createElement('br', null),
-			React.createElement(Switch, { locked: true, active: !this.state.externalActive })
+			React.createElement(Switch, { locked: true, active: !this.state.externalValue, onChange: function (value) {
+					_this.setState({ externalValue: !value });
+				} })
 		);
 	}
 });
