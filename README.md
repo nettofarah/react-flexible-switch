@@ -41,15 +41,13 @@ const Switch = require('react-flexible-switch');
 
 ```javascript
 Switch.propTypes = {
-  active: React.PropTypes.bool,
+  value: React.PropTypes.bool,
 
   circleStyles: React.PropTypes.shape({
     onColor: React.PropTypes.string,
     offColor: React.PropTypes.string,
     diameter: React.PropTypes.number
   }),
-
-  inactive: React.PropTypes.bool,
 
   labels: React.PropTypes.shape({
     on: React.PropTypes.string,
@@ -58,8 +56,7 @@ Switch.propTypes = {
 
   locked: React.PropTypes.bool,
 
-  onActive: React.PropTypes.func,
-  onInactive: React.PropTypes.func,
+  onChange: React.PropTypes.func,
 
   switchStyles: React.PropTypes.shape({
     width: React.PropTypes.number
@@ -67,7 +64,7 @@ Switch.propTypes = {
 };
 ```
 
-#### Active / Inactive
+#### Active
 Allows you to start a switch either turned on or off.
 
 ```javascript
@@ -75,17 +72,26 @@ Allows you to start a switch either turned on or off.
 <Switch active />
 
 //Off by default
-<Switch inactive />
+<Switch active={false} />
 ```
 
-#### Callbacks: onActive / onInactive
-Allows you to pass in callbacks when state changes.
+#### onChange
+Allows you to pass in callback for when state changes.
+This will allow you to make the switch a controlled component.
 
 ```javascript
-const onActive = () => { console.log('active!') }
-const onInactive = () => { console.log('inactive!') }
+const onChange = (active) => {
+  if (active) {
+    console.log('active!')
+  } else {
+    console.log('inactive!')
+  }
 
-<Switch onActive={onActive} onInactive={onInactive} />
+  // update your state here
+  this.setState({ value: active })
+}
+
+<Switch onChange={onChange} />
 ```
 
 #### Custom Styles

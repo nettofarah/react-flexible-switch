@@ -115,70 +115,36 @@ var Switch = (function (_React$Component) {
 
     this.isTouchDevice = window['ontouchstart'] !== undefined;
 
-    var activeState = this.activeStateFromProps(this.props);
-
-    this.state = { sliding: false, active: activeState };
+    this.state = { sliding: false, value: this.props.value };
   }
 
   _createClass(Switch, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      if (!!this.props.locked) {
-        return;
-      }
-
       this.addListener();
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      var lockedChanged = nextProps.locked !== this.props.locked;
-      if (lockedChanged) {
-        nextProps.locked ? this.removeListener() : this.addListener();
+      if (nextProps.value === undefined) {
+        return;
       }
 
-      if (nextProps.active !== this.props.active) {
-        var newActiveState = this.activeStateFromProps(nextProps);
-
-        if (newActiveState !== this.state.active) {
-          this.state = { active: newActiveState };
-        }
+      if (nextProps.value !== this.state.value) {
+        this.setState({ value: nextProps.value });
       }
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      if (this.state.active != prevState.active) {
-        var callback = this.state.active ? this.props.onActive : this.props.onInactive;
-        callback && callback();
+      if (this.state.value != prevState.value) {
+        this.props.onChange(this.state.value);
       }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      if (!!this.props.locked) {
-        return;
-      }
-
       this.removeListener();
-    }
-  }, {
-    key: 'activeStateFromProps',
-    value: function activeStateFromProps(props) {
-      var activeState = false;
-
-      if (typeof props.active == 'undefined' && typeof props.inactive == 'undefined') {
-        activeState = false;
-      }
-
-      if (typeof props.active != 'undefined' && props.active) {
-        activeState = true;
-      }
-
-      if (typeof props.inactive != 'undefined' && props.inactive) {
-        activeState = false;
-      }
-      return activeState;
     }
   }, {
     key: 'addListener',
@@ -205,14 +171,22 @@ var Switch = (function (_React$Component) {
   }, {
     key: 'onSlideEnd',
     value: function onSlideEnd() {
+      if (this.props.locked) {
+        return;
+      }
+
       if (this.state.sliding) {
-        this.setState({ sliding: false, active: !this.state.active });
+        this.setState({ sliding: false, value: !this.state.value });
         (0, _utils.reEnableScroll)();
       }
     }
   }, {
     key: 'onSlideStart',
     value: function onSlideStart(e) {
+      if (this.props.locked) {
+        return;
+      }
+
       if (e.target == this.refs.circle || e.target == this.refs['switch']) {
         this.setState({ sliding: true });
         (0, _utils.disableScroll)();
@@ -226,7 +200,7 @@ var Switch = (function (_React$Component) {
   }, {
     key: 'classes',
     value: function classes() {
-      return (0, _classnames2['default'])('switch', { sliding: this.state.sliding }, { active: this.state.active }, { inactive: !this.state.active });
+      return (0, _classnames2['default'])('switch', { sliding: this.state.sliding }, { active: this.state.value }, { inactive: !this.state.value });
     }
   }, {
     key: 'switchStyles',
@@ -241,9 +215,9 @@ var Switch = (function (_React$Component) {
       var switchStyles = this.switchStyles();
 
       var offset = switchStyles.width - circleStyles.diameter;
-      var translation = this.state.active ? offset : 0;
+      var translation = this.state.value ? offset : 0;
 
-      if (this.state.sliding && this.state.active) {
+      if (this.state.sliding && this.state.value) {
         translation -= circleStyles.diameter / 4 + switchStyles.padding / 4;
       }
 
@@ -255,7 +229,7 @@ var Switch = (function (_React$Component) {
     key: 'backgroundStyle',
     value: function backgroundStyle() {
       var circleStyles = this.circleStylesProps();
-      var backgroundColor = this.state.active ? circleStyles.onColor : circleStyles.offColor;
+      var backgroundColor = this.state.value ? circleStyles.onColor : circleStyles.offColor;
       return { backgroundColor: backgroundColor };
     }
   }, {
@@ -290,7 +264,7 @@ var Switch = (function (_React$Component) {
           className: this.classes(),
           ref: 'switch',
           onMouseLeave: this.onMouseLeave },
-        _react2['default'].createElement(_Label2['default'], { active: this.state.active, labels: this.props.labels, ref: 'label' }),
+        _react2['default'].createElement(_Label2['default'], { active: this.state.value, labels: this.props.labels, ref: 'label' }),
         _react2['default'].createElement('span', { style: this.circleStyles(), className: 'circle', ref: 'circle' })
       );
     }
@@ -319,15 +293,13 @@ var defaultCircleStyles = {
 };
 
 Switch.propTypes = {
-  active: _react2['default'].PropTypes.bool,
+  value: _react2['default'].PropTypes.bool,
 
   circleStyles: _react2['default'].PropTypes.shape({
     onColor: _react2['default'].PropTypes.string,
     offColor: _react2['default'].PropTypes.string,
     diameter: _react2['default'].PropTypes.number
   }),
-
-  inactive: _react2['default'].PropTypes.bool,
 
   labels: _react2['default'].PropTypes.shape({
     on: _react2['default'].PropTypes.string,
@@ -336,8 +308,7 @@ Switch.propTypes = {
 
   locked: _react2['default'].PropTypes.bool,
 
-  onActive: _react2['default'].PropTypes.func,
-  onInactive: _react2['default'].PropTypes.func,
+  onChange: _react2['default'].PropTypes.func,
 
   switchStyles: _react2['default'].PropTypes.shape({
     width: _react2['default'].PropTypes.number
@@ -345,11 +316,11 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
-  onInactive: function onInactive() {},
-  onActive: function onActive() {},
+  onChange: function onChange() {},
   circleStyles: defaultCircleStyles,
   switchStyles: defaultSwitchStyles,
-  labels: { on: '', off: '' }
+  labels: { on: '', off: '' },
+  locked: false
 };
 
 exports['default'] = Switch;

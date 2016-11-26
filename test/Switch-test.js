@@ -10,8 +10,7 @@ describe('props', () => {
     const comp = renderComponent();
     const props = comp.props;
 
-    assert(typeof props.onInactive === 'function');
-    assert(typeof props.onActive === 'function');
+    assert(typeof props.onChange === 'function');
     assert(typeof props.circleStyles === 'object');
     assert(typeof props.switchStyles === 'object');
   });
@@ -19,24 +18,25 @@ describe('props', () => {
   describe('active', () => {
 
     it('turns the switch on', () => {
-      const comp = renderComponent({ active: true });
+      const comp = renderComponent({ value: true });
       assert(isOn(comp));
     });
 
     it('turns the switch off', () => {
-      const comp = renderComponent({ active: false });
+      const comp = renderComponent({ value: false });
       assert(isOff(comp));
-
-      const compOff = renderComponent({ inactive: true });
-      assert(isOff(compOff));
     });
   });
 
-  describe('onActive', () => {
+  describe('onChange', () => {
     it('gets called after the switch is turned on', () => {
       let called = false;
-      const onActive = () => called = true;
-      const comp = renderComponent({ onActive });
+      const onChange = (switchValue) => {
+        if (switchValue) {
+          called = true
+        }
+      };
+      const comp = renderComponent({ onChange });
 
       flip(comp);
 
@@ -44,47 +44,25 @@ describe('props', () => {
       assert(called);
     });
 
-    it('does not get called when the switch is turned off', () => {
-      let called = false;
-      const onActive = () => called = true;
-      const comp = renderComponent({ active: true, onActive });
-      assert(isOn(comp));
-
-      flip(comp);
-
-      assert(isOff(comp));
-      assert(!called);
-    });
-  });
-
-  describe('onInactive', () => {
     it('gets called when the switch is turned off', () => {
       let called = false;
-      const onInactive = () => called = true;
-      const comp = renderComponent({ active: true, onInactive });
+      const onChange = (switchValue) => {
+        if (!switchValue) {
+          called = true;
+        }
+      }
+      const comp = renderComponent({ value: true, onChange });
 
       flip(comp);
 
       assert(isOff(comp));
       assert(called);
-    });
-
-    it('does not get called when the switch is turned on', () => {
-      let called = false;
-      const onInactive = () => called = true;
-      const comp = renderComponent({ inactive: true, onInactive });
-      assert(isOff(comp));
-
-      flip(comp);
-
-      assert(isOn(comp));
-      assert(!called);
     });
   });
 
   describe('locked', () => {
     it('turned on -> locks the switch, blocking user interaction', () => {
-      const comp = renderComponent({ active: true, locked: true });
+      const comp = renderComponent({ value: true, locked: true });
       assert(isOn(comp));
 
       flip(comp);
@@ -92,7 +70,7 @@ describe('props', () => {
     });
 
     it('turned off -> locks the switch, blocking user interaction', () => {
-      const comp = renderComponent({ inactive: true, locked: true });
+      const comp = renderComponent({ value: false, locked: true });
       assert(isOff(comp));
 
       flip(comp);
