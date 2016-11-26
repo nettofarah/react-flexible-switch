@@ -95,11 +95,11 @@ var App = React.createClass({
 			),
 			React.createElement('br', null),
 			React.createElement('br', null),
-			React.createElement(Switch, { locked: true, active: this.state.externalValue, onChange: function (value) {
+			React.createElement(Switch, { locked: true, value: this.state.externalValue, onChange: function (value) {
 					_this.setState({ externalValue: value });
 				} }),
 			React.createElement('br', null),
-			React.createElement(Switch, { locked: true, active: !this.state.externalValue, onChange: function (value) {
+			React.createElement(Switch, { locked: true, value: !this.state.externalValue, onChange: function (value) {
 					_this.setState({ externalValue: !value });
 				} })
 		);
