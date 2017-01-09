@@ -8,6 +8,7 @@ class Switch extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onActivateButton = this.onActivateButton.bind(this);
     this.onSlideEnd = this.onSlideEnd.bind(this);
     this.onSlideStart = this.onSlideStart.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -59,6 +60,10 @@ class Switch extends React.Component {
       document.removeEventListener(events.mouse.start, this.onSlideStart, false);
       document.removeEventListener(events.mouse.stop, this.onSlideEnd, false);
     }
+  }
+
+  onActivateButton() {
+    this.setState({ value: !this.state.value });
   }
 
   onSlideEnd() {
@@ -158,7 +163,14 @@ class Switch extends React.Component {
       onMouseLeave={this.onMouseLeave}>
 
         <Label active={this.state.value} labels={this.props.labels} ref="label" />
-        <span style={this.circleStyles()} className="circle" ref="circle"></span>
+        <span style={this.circleStyles()} className="circle" ref="circle" />
+        <button
+          disabled={this.props.locked}
+          onClick={this.onActivateButton}
+          style={hiddenButtonStyles}
+          type="button"
+          ref="button"
+        />
       </span>
     );
   }
@@ -181,6 +193,18 @@ const defaultCircleStyles = {
   transition: 'transform 200ms, width 200ms, background-color 200ms',
   onColor: '#70D600',
   offColor: '#CFCFCF'
+};
+
+const hiddenButtonStyles = {
+  backgroundColor: 'transparent',
+  borderColor: 'transparent',
+  color: 'transparent',
+  height: '100%',
+  left: 0,
+  pointerEvents: 'none',
+  position: 'absolute',
+  top: 0,
+  width: '100%'
 };
 
 Switch.propTypes = {
