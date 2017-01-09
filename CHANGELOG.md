@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0 (Jan 9, 2017)
+### Added
+- Add keyboard access support
+
 ## 0.5.1 (Nov 26, 2016)
 ### Fixed
 - Fixed wrong reference to `value` in Readme
