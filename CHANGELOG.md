@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 (Apr 5, 2017)
+### Added
+- Add namespaced CSS class for the circle component
+
 ## 1.0.1 (Apr 5, 2017)
 ### Fixed
 - Updated CHANGELOG to mention 1.0.0

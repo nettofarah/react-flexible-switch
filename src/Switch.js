@@ -163,7 +163,7 @@ class Switch extends React.Component {
         onMouseLeave={this.onMouseLeave}>
 
         <Label active={this.state.value} labels={this.props.labels} ref="label" />
-        <span style={this.circleStyles()} className="circle" ref="circle" />
+        <span style={this.circleStyles()} className="react-flexible-switch-circle" ref="circle" />
 
         <button
           disabled={this.props.locked}

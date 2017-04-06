@@ -118,6 +118,7 @@ You can also style the components using the following css classes:
 - `react-flexible-switch--inactive`: the main component, when inactive
 - `react-flexible-switch--sliding`: the main component, during the transition
 - `react-flexible-switch-label`: the label component
+- `react-flexible-switch-circle`: the circle component
 
 #### Labels
 Labels for the `on` and `off` states can be set by using the `labels` property.

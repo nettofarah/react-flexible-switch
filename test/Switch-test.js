@@ -278,6 +278,11 @@ describe('css classes', () => {
     const comp = renderComponent();
     assert(hasClass(comp.refs.label, 'react-flexible-switch-label'));
   });
+
+  it('adds a css class for the circle component', () => {
+    const comp = renderComponent();
+    assert(hasClass(comp, 'react-flexible-switch-circle'));
+  });
 });
 
 function simulateEvent(eventName, el) {
