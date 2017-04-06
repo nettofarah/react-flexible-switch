@@ -47,7 +47,7 @@ var Label = (function (_React$Component) {
     value: function render() {
       return _react2['default'].createElement(
         'span',
-        { style: this.styles(), className: 'label' },
+        { style: this.styles(), className: 'react-flexible-switch-label' },
         this.props.active ? this.props.labels.on : this.props.labels.off
       );
     }
@@ -249,7 +249,7 @@ var Switch = (function (_React$Component) {
   }, {
     key: 'classes',
     value: function classes() {
-      return (0, _classnames2['default'])('switch', { sliding: this.state.sliding }, { active: this.state.value }, { inactive: !this.state.value });
+      return (0, _classnames2['default'])('react-flexible-switch', { 'react-flexible-switch--sliding': this.state.sliding }, { 'react-flexible-switch--active': this.state.value }, { 'react-flexible-switch--inactive': !this.state.value });
     }
   }, {
     key: 'switchStyles',
