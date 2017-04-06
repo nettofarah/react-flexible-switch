@@ -241,9 +241,56 @@ describe('Labels', () => {
   });
 });
 
+describe('css classes', () => {
+
+  it('adds namespaced classes to the component', () => {
+    const comp = renderComponent();
+    assert(hasClass(comp, 'react-flexible-switch'));
+    assert(!hasClass(comp, 'react-flexible-switch--sliding'));
+  });
+
+  it('adds class hook for active components', () => {
+    const comp = renderComponent({ value: true });
+    assert(hasClass(comp, 'react-flexible-switch--active'));
+    assert(!hasClass(comp, 'react-flexible-switch--sliding'));
+
+    flip(comp);
+    assert(hasClass(comp, 'react-flexible-switch--inactive'));
+  });
+
+  it('adds class hook for inactive components', () => {
+    const comp = renderComponent({ value: false });
+    assert(hasClass(comp, 'react-flexible-switch--inactive'));
+    assert(!hasClass(comp, 'react-flexible-switch--sliding'));
+
+    flip(comp);
+    assert(hasClass(comp, 'react-flexible-switch--active'));
+  });
+
+  it('adds a class hook for when the component is being animated', () => {
+    const comp = renderComponent();
+    simulateEvent('mousedown', comp.refs.circle);
+
+    assert(hasClass(comp, 'react-flexible-switch--sliding'));
+  });
+
+  it('adds a css class for the label', () => {
+    const comp = renderComponent();
+    assert(hasClass(comp.refs.label, 'react-flexible-switch-label'));
+  });
+});
+
 function simulateEvent(eventName, el) {
   const event = new MouseEvent(eventName, { bubbles: true, cancelable: false });
   el.dispatchEvent(event);
+}
+
+function hasClass(comp, className) {
+  try {
+    return TestUtils.findRenderedDOMComponentWithClass(comp, className);
+  } catch(e) {
+    return false
+  }
 }
 
 function isOn(comp) {

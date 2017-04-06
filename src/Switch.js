@@ -94,10 +94,10 @@ class Switch extends React.Component {
 
   classes() {
     return classNames(
-      'switch',
-      { sliding: this.state.sliding },
-      { active: this.state.value },
-      { inactive: !this.state.value }
+      'react-flexible-switch',
+      { 'react-flexible-switch--sliding': this.state.sliding },
+      { 'react-flexible-switch--active': this.state.value },
+      { 'react-flexible-switch--inactive': !this.state.value }
     );
   }
 
@@ -158,12 +158,13 @@ class Switch extends React.Component {
   render() {
     return (
       <span style={this.switchStyles()}
-      className={this.classes()}
-      ref="switch"
-      onMouseLeave={this.onMouseLeave}>
+        className={this.classes()}
+        ref="switch"
+        onMouseLeave={this.onMouseLeave}>
 
         <Label active={this.state.value} labels={this.props.labels} ref="label" />
         <span style={this.circleStyles()} className="circle" ref="circle" />
+
         <button
           disabled={this.props.locked}
           onClick={this.onActivateButton}

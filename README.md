@@ -110,6 +110,15 @@ the addition of `onColor`, `offColor` and `diameter`.
 <Switch switchStyles={{ width: 200 }} />
 ```
 
+#### Customzing with CSS classes
+You can also style the components using the following css classes:
+
+- `react-flexible-switch`: the main component
+- `react-flexible-switch--active`: the main component, when active
+- `react-flexible-switch--inactive`: the main component, when inactive
+- `react-flexible-switch--sliding`: the main component, during the transition
+- `react-flexible-switch-label`: the label component
+
 #### Labels
 Labels for the `on` and `off` states can be set by using the `labels` property.
 

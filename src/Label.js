@@ -16,7 +16,7 @@ export default class Label extends React.Component {
 
   render() {
     return (
-      <span style={this.styles()} className="label">
+      <span style={this.styles()} className="react-flexible-switch-label">
       {this.props.active ? this.props.labels.on : this.props.labels.off }
       </span>
     );
