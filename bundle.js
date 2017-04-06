@@ -314,7 +314,7 @@ var Switch = (function (_React$Component) {
           ref: 'switch',
           onMouseLeave: this.onMouseLeave },
         _react2['default'].createElement(_Label2['default'], { active: this.state.value, labels: this.props.labels, ref: 'label' }),
-        _react2['default'].createElement('span', { style: this.circleStyles(), className: 'circle', ref: 'circle' }),
+        _react2['default'].createElement('span', { style: this.circleStyles(), className: 'react-flexible-switch-circle', ref: 'circle' }),
         _react2['default'].createElement('button', {
           disabled: this.props.locked,
           onClick: this.onActivateButton,
