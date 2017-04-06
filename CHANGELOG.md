@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 (Apr 5, 2017)
+### Fixed
+- Updated CHANGELOG to mention 1.0.0
+
+## 1.0.0 (Apr 5, 2017)
+### Added
+- Namespace CSS classes in order to avoid colisions
+
 ## 0.6.0 (Jan 9, 2017)
 ### Added
 - Add keyboard access support
