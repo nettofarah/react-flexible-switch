@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Label from './Label';
 import { merge, events, disableScroll, reEnableScroll } from './utils';
+import PropTypes from 'prop-types'
 
 class Switch extends React.Component {
 
@@ -209,25 +210,25 @@ const hiddenButtonStyles = {
 };
 
 Switch.propTypes = {
-  value: React.PropTypes.bool,
+  value: PropTypes.bool,
 
-  circleStyles: React.PropTypes.shape({
-    onColor: React.PropTypes.string,
-    offColor: React.PropTypes.string,
-    diameter: React.PropTypes.number
+  circleStyles: PropTypes.shape({
+    onColor: PropTypes.string,
+    offColor: PropTypes.string,
+    diameter: PropTypes.number
   }),
 
-  labels: React.PropTypes.shape({
-    on: React.PropTypes.string,
-    off: React.PropTypes.string
+  labels: PropTypes.shape({
+    on: PropTypes.string,
+    off: PropTypes.string
   }),
 
-  locked: React.PropTypes.bool,
+  locked: PropTypes.bool,
 
-  onChange: React.PropTypes.func,
+  onChange: PropTypes.func,
 
-  switchStyles: React.PropTypes.shape({
-    width: React.PropTypes.number
+  switchStyles: PropTypes.shape({
+    width: PropTypes.number
   })
 };
 

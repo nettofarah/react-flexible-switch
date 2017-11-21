@@ -1,5 +1,6 @@
 import React from 'react';
 import { merge } from './utils';
+import PropTypes from 'prop-types'
 
 export default class Label extends React.Component {
 
@@ -25,9 +26,9 @@ export default class Label extends React.Component {
 
 
 Label.propTypes = {
-  active: React.PropTypes.bool,
-  labels: React.PropTypes.shape({
-    on: React.PropTypes.string,
-    off: React.PropTypes.string
+  active: PropTypes.bool,
+  labels: PropTypes.shape({
+    on: PropTypes.string,
+    off: PropTypes.string
   })
 };
