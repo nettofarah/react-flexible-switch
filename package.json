@@ -42,6 +42,7 @@
     "test":
       "NODE_ENV=test mocha --compilers js:babel-register --require ./test/helpers/fakeDom.js",
     "dev": "webpack-dev-server",
+    "build-example": "webpack",
     "release": "np"
   },
   "keywords": [
