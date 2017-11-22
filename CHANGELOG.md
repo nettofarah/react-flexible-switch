@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 1.2.0 (Nov 21, 2017)
+### Added
+- Add support for React 16
+
 ## 1.1.0 (Apr 5, 2017)
 ### Added
 - Add namespaced CSS class for the circle component
