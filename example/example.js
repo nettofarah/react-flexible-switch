@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Switch from '../src/Switch'
+import Switch from '../lib/Switch'
 
 class App extends React.Component {
   constructor() {
