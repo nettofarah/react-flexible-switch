@@ -1,6 +1,6 @@
 {
   "name": "react-flexible-switch",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Simple and flexible React Switch",
   "main": "lib/Switch.js",
   "author": "Netto Farah",
@@ -40,8 +40,7 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "test":
-      "NODE_ENV=test mocha --compilers js:babel-register --require ./test/helpers/fakeDom.js",
+    "test": "NODE_ENV=test mocha --compilers js:babel-register --require ./test/helpers/fakeDom.js",
     "dev": "webpack-dev-server",
     "build-example": "webpack",
     "release": "np"
@@ -54,5 +53,8 @@
     "react-switch",
     "react-toggle"
   ],
-  "files": ["lib", "src"]
+  "files": [
+    "lib",
+    "src"
+  ]
 }
