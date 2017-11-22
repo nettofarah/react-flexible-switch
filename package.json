@@ -22,6 +22,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "branchsite": "^4.0.2",
     "jsdom": "^8.4.0",
     "mocha": "^2.4.5",
     "np": "^2.17.0",
@@ -43,6 +44,7 @@
       "NODE_ENV=test mocha --compilers js:babel-register --require ./test/helpers/fakeDom.js",
     "dev": "webpack-dev-server",
     "build-example": "webpack",
+    "postdeploy": "bs",
     "release": "np"
   },
   "keywords": [
